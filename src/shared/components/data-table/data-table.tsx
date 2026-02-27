@@ -17,17 +17,20 @@ import * as React from "react"
 import { DataTablePagination } from "./data-table-pagination"
 import { DataTableViewOptions } from "./data-table-view-options"
 import { DataTableFilter } from "./data-table-filter"
+import { Skeleton } from "../ui/skeleton"
 
 
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
+    isLoading?: boolean
 }
 
 export function DataTable<TData, TValue>({
     columns,
     data,
+    isLoading,
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
@@ -61,7 +64,7 @@ export function DataTable<TData, TValue>({
             </div>
             <div className="overflow-hidden rounded-md border">
                 <Table>
-                    <TableHeader>
+                    <TableHeader className="bg-muted">
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => {
@@ -80,7 +83,17 @@ export function DataTable<TData, TValue>({
                         ))}
                     </TableHeader>
                     <TableBody>
-                        {table.getRowModel().rows?.length ? (
+                        {isLoading ? (
+                            Array.from({ length: 5 }).map((_, rowIndex) => (
+                                <TableRow key={rowIndex}>
+                                    {columns.map((_, cellIndex) => (
+                                        <TableCell key={cellIndex}>
+                                            <Skeleton className="h-6 w-full" />
+                                        </TableCell>
+                                    ))}
+                                </TableRow>
+                            ))
+                        ) : table.getRowModel().rows?.length ? (
                             table.getRowModel().rows.map((row) => (
                                 <TableRow
                                     key={row.id}

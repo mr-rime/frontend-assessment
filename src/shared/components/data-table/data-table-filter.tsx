@@ -25,7 +25,7 @@ export function DataTableFilter<TData>({ table }: { table: Table<TData> }) {
 
     const debouncedSetFilter = useDebounce((value) => {
         table.getColumn(currentFilter)?.setFilterValue(value);
-    }, 200);
+    }, 300);
 
     React.useEffect(() => {
         setInputValue(

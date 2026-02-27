@@ -1,16 +1,23 @@
 import { AdminWrapper } from "@/shared/components/admin-wrapper";
 import { DataTable } from "@/shared/components/data-table/data-table";
 import { productTableColumns } from "../constants";
-import { db } from "@/db";
+import { NewProductDialog } from "./new-product-dialog";
+import { useQuery } from "@tanstack/react-query";
+import { getProductsQueryOptions } from "../queries/products.queries";
 
 
 export function Products() {
+    const { data: products, isLoading } = useQuery(getProductsQueryOptions())
+
     return (
-        <AdminWrapper title="Products">
+        <AdminWrapper title="Products" controls={
+            <NewProductDialog />
+        }>
             <div>
                 <DataTable
                     columns={productTableColumns}
-                    data={db.products}
+                    data={products || []}
+                    isLoading={isLoading}
                 />
             </div>
         </AdminWrapper>

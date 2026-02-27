@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import "./index.css"
 import { ThemeProvider } from './providers/theme-provider'
 import { TooltipProvider } from './shared/components/ui/tooltip'
+import { GoeyToaster } from './shared/components/ui/goey-toaster'
 const router = createRouter({ routeTree })
 const queryClient = new QueryClient()
 
@@ -26,6 +27,7 @@ if (!rootElement.innerHTML) {
         <TooltipProvider>
           <QueryClientProvider client={queryClient}>
             <RouterProvider router={router} />
+            <GoeyToaster position='top-center' duration={1000} />
           </QueryClientProvider>
         </TooltipProvider>
       </ThemeProvider>

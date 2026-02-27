@@ -3,13 +3,13 @@ import { Button } from "@/shared/components/ui/button"
 import { Checkbox } from "@/shared/components/ui/checkbox"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/shared/components/ui/dropdown-menu"
 import type { ColumnDef } from "@tanstack/react-table"
-import { ChevronRight, MoreHorizontal, Trash } from "lucide-react"
-import type { ProductType } from "../types"
+import { ChevronRight, Image, MoreHorizontal, Trash } from "lucide-react"
 import { DataTableColumnHeader } from "@/shared/components/data-table"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/components/ui/tooltip"
 import { formatNumberToUSD } from "@/lib/format-number-to-usd"
+import type { Product } from "../schemas/product.schema"
 
-export const productTableColumns: ColumnDef<ProductType>[] = [
+export const productTableColumns: ColumnDef<Product>[] = [
     {
         id: "select",
         header: ({ table }) => (
@@ -43,7 +43,9 @@ export const productTableColumns: ColumnDef<ProductType>[] = [
             const image = row.original.image
             return (
                 <div className="flex items-center justify-center">
-                    <img src={image} alt="product-image" className="h-15 w-15 rounded-sm" />
+                    {
+                        image ? <img src={image} alt="product-image" className="h-15 w-15 rounded-sm" /> : <Image className="h-15 w-15 rounded-sm" />
+                    }
                 </div>
             )
         },
@@ -86,7 +88,7 @@ export const productTableColumns: ColumnDef<ProductType>[] = [
 
     {
         accessorKey: "category",
-        header: "Category",
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Category" />,
     },
 
     {
@@ -95,7 +97,7 @@ export const productTableColumns: ColumnDef<ProductType>[] = [
         cell: ({ row }) => {
             const description = row.original.description
             return (
-                <Tooltip>
+                description && <Tooltip>
                     <TooltipTrigger><div className="text-muted-foreground">{description.slice(0, 40) + "..."}</div></TooltipTrigger>
                     <TooltipContent>
                         <p>{description}</p>
@@ -106,7 +108,7 @@ export const productTableColumns: ColumnDef<ProductType>[] = [
     },
 
     {
-        accessorKey: "Acions",
+        accessorKey: "Actions",
         id: "actions",
         enableColumnFilter: false,
         enableSorting: false,
