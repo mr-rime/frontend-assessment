@@ -1,11 +1,12 @@
 
 type AdminWrapperProps = {
     title: string
+    controls?: React.ReactNode
     children: React.ReactNode
 }
 
 
-export function AdminWrapper({ title, children }: AdminWrapperProps) {
+export function AdminWrapper({ title, controls, children }: AdminWrapperProps) {
     return (
         <div className="flex flex-col p-4 space-y-4">
             <div className="flex justify-between">
@@ -13,9 +14,7 @@ export function AdminWrapper({ title, children }: AdminWrapperProps) {
                     {title}
                 </h1>
 
-                <div>
-                    controls
-                </div>
+                {controls}
             </div>
 
             {children}
