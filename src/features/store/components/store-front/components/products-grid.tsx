@@ -2,14 +2,16 @@ import { Pagination } from "@/shared/components/pagination";
 import { useQuery } from "@tanstack/react-query";
 import { getProductsQueryOptions } from "../queries/products.queries";
 import { Product } from "./product";
+import { ProductSkeleton } from "./product-skeleton";
 import { useNavigate, useSearch } from "@tanstack/react-router";
+import { ProductsFilter } from "./products-filter";
 
 const pageSize = 12;
 
 export function ProductsGrid() {
     const navigate = useNavigate({ from: "/" });
 
-    const { page = 1 } = useSearch({
+    const { page = 1, sortBy, order } = useSearch({
         from: "/(store)/_store-layout/",
     });
 
@@ -19,6 +21,8 @@ export function ProductsGrid() {
         getProductsQueryOptions({
             currentPage,
             pageSize,
+            sortBy,
+            order,
         })
     );
 
@@ -28,6 +32,8 @@ export function ProductsGrid() {
         navigate({
             search: {
                 page: nextPage,
+                sortBy,
+                order,
             },
         });
     };
@@ -36,9 +42,12 @@ export function ProductsGrid() {
         <div className="space-y-8">
             <div className="flex items-center justify-between">
                 <p className="text-sm text-muted-foreground"><span>{data?.items.length}</span> <span>products</span></p>
+                <ProductsFilter />
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {isLoading && <p>Loading...</p>}
+                {isLoading && Array.from({ length: pageSize }).map((_, i) => (
+                    <ProductSkeleton key={i} />
+                ))}
 
                 {data?.items.map(product => (
                     <Product key={product.id} {...product} />
