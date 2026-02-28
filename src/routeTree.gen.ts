@@ -9,35 +9,49 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as storeStoreLayoutRouteImport } from './routes/(store)/_store-layout'
 import { Route as adminAdminLayoutRouteImport } from './routes/(admin)/_admin-layout'
-import { Route as storeRegisterIndexRouteImport } from './routes/(store)/register/index'
-import { Route as storeLoginIndexRouteImport } from './routes/(store)/login/index'
+import { Route as storeStoreLayoutIndexRouteImport } from './routes/(store)/_store-layout/index'
+import { Route as storeStoreLayoutRegisterIndexRouteImport } from './routes/(store)/_store-layout/register/index'
+import { Route as storeStoreLayoutLoginIndexRouteImport } from './routes/(store)/_store-layout/login/index'
+import { Route as storeStoreLayoutCartIndexRouteImport } from './routes/(store)/_store-layout/cart/index'
 import { Route as adminAdminLayoutAdminIndexRouteImport } from './routes/(admin)/_admin-layout/admin/index'
 import { Route as adminAdminLayoutAdminProductsIndexRouteImport } from './routes/(admin)/_admin-layout/admin/products/index'
 import { Route as adminAdminLayoutAdminOrdersIndexRouteImport } from './routes/(admin)/_admin-layout/admin/orders/index'
 import { Route as adminAdminLayoutAdminLoginIndexRouteImport } from './routes/(admin)/_admin-layout/admin/login/index'
 import { Route as adminAdminLayoutAdminCustomersIndexRouteImport } from './routes/(admin)/_admin-layout/admin/customers/index'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const storeStoreLayoutRoute = storeStoreLayoutRouteImport.update({
+  id: '/(store)/_store-layout',
   getParentRoute: () => rootRouteImport,
 } as any)
 const adminAdminLayoutRoute = adminAdminLayoutRouteImport.update({
   id: '/(admin)/_admin-layout',
   getParentRoute: () => rootRouteImport,
 } as any)
-const storeRegisterIndexRoute = storeRegisterIndexRouteImport.update({
-  id: '/(store)/register/',
-  path: '/register/',
-  getParentRoute: () => rootRouteImport,
+const storeStoreLayoutIndexRoute = storeStoreLayoutIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => storeStoreLayoutRoute,
 } as any)
-const storeLoginIndexRoute = storeLoginIndexRouteImport.update({
-  id: '/(store)/login/',
-  path: '/login/',
-  getParentRoute: () => rootRouteImport,
-} as any)
+const storeStoreLayoutRegisterIndexRoute =
+  storeStoreLayoutRegisterIndexRouteImport.update({
+    id: '/register/',
+    path: '/register/',
+    getParentRoute: () => storeStoreLayoutRoute,
+  } as any)
+const storeStoreLayoutLoginIndexRoute =
+  storeStoreLayoutLoginIndexRouteImport.update({
+    id: '/login/',
+    path: '/login/',
+    getParentRoute: () => storeStoreLayoutRoute,
+  } as any)
+const storeStoreLayoutCartIndexRoute =
+  storeStoreLayoutCartIndexRouteImport.update({
+    id: '/cart/',
+    path: '/cart/',
+    getParentRoute: () => storeStoreLayoutRoute,
+  } as any)
 const adminAdminLayoutAdminIndexRoute =
   adminAdminLayoutAdminIndexRouteImport.update({
     id: '/admin/',
@@ -70,20 +84,22 @@ const adminAdminLayoutAdminCustomersIndexRoute =
   } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/login/': typeof storeLoginIndexRoute
-  '/register/': typeof storeRegisterIndexRoute
+  '/': typeof storeStoreLayoutIndexRoute
   '/admin/': typeof adminAdminLayoutAdminIndexRoute
+  '/cart/': typeof storeStoreLayoutCartIndexRoute
+  '/login/': typeof storeStoreLayoutLoginIndexRoute
+  '/register/': typeof storeStoreLayoutRegisterIndexRoute
   '/admin/customers/': typeof adminAdminLayoutAdminCustomersIndexRoute
   '/admin/login/': typeof adminAdminLayoutAdminLoginIndexRoute
   '/admin/orders/': typeof adminAdminLayoutAdminOrdersIndexRoute
   '/admin/products/': typeof adminAdminLayoutAdminProductsIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/login': typeof storeLoginIndexRoute
-  '/register': typeof storeRegisterIndexRoute
+  '/': typeof storeStoreLayoutIndexRoute
   '/admin': typeof adminAdminLayoutAdminIndexRoute
+  '/cart': typeof storeStoreLayoutCartIndexRoute
+  '/login': typeof storeStoreLayoutLoginIndexRoute
+  '/register': typeof storeStoreLayoutRegisterIndexRoute
   '/admin/customers': typeof adminAdminLayoutAdminCustomersIndexRoute
   '/admin/login': typeof adminAdminLayoutAdminLoginIndexRoute
   '/admin/orders': typeof adminAdminLayoutAdminOrdersIndexRoute
@@ -91,11 +107,13 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
   '/(admin)/_admin-layout': typeof adminAdminLayoutRouteWithChildren
-  '/(store)/login/': typeof storeLoginIndexRoute
-  '/(store)/register/': typeof storeRegisterIndexRoute
+  '/(store)/_store-layout': typeof storeStoreLayoutRouteWithChildren
+  '/(store)/_store-layout/': typeof storeStoreLayoutIndexRoute
   '/(admin)/_admin-layout/admin/': typeof adminAdminLayoutAdminIndexRoute
+  '/(store)/_store-layout/cart/': typeof storeStoreLayoutCartIndexRoute
+  '/(store)/_store-layout/login/': typeof storeStoreLayoutLoginIndexRoute
+  '/(store)/_store-layout/register/': typeof storeStoreLayoutRegisterIndexRoute
   '/(admin)/_admin-layout/admin/customers/': typeof adminAdminLayoutAdminCustomersIndexRoute
   '/(admin)/_admin-layout/admin/login/': typeof adminAdminLayoutAdminLoginIndexRoute
   '/(admin)/_admin-layout/admin/orders/': typeof adminAdminLayoutAdminOrdersIndexRoute
@@ -105,9 +123,10 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin/'
+    | '/cart/'
     | '/login/'
     | '/register/'
-    | '/admin/'
     | '/admin/customers/'
     | '/admin/login/'
     | '/admin/orders/'
@@ -115,20 +134,23 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin'
+    | '/cart'
     | '/login'
     | '/register'
-    | '/admin'
     | '/admin/customers'
     | '/admin/login'
     | '/admin/orders'
     | '/admin/products'
   id:
     | '__root__'
-    | '/'
     | '/(admin)/_admin-layout'
-    | '/(store)/login/'
-    | '/(store)/register/'
+    | '/(store)/_store-layout'
+    | '/(store)/_store-layout/'
     | '/(admin)/_admin-layout/admin/'
+    | '/(store)/_store-layout/cart/'
+    | '/(store)/_store-layout/login/'
+    | '/(store)/_store-layout/register/'
     | '/(admin)/_admin-layout/admin/customers/'
     | '/(admin)/_admin-layout/admin/login/'
     | '/(admin)/_admin-layout/admin/orders/'
@@ -136,19 +158,17 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
   adminAdminLayoutRoute: typeof adminAdminLayoutRouteWithChildren
-  storeLoginIndexRoute: typeof storeLoginIndexRoute
-  storeRegisterIndexRoute: typeof storeRegisterIndexRoute
+  storeStoreLayoutRoute: typeof storeStoreLayoutRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/(store)/_store-layout': {
+      id: '/(store)/_store-layout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof storeStoreLayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(admin)/_admin-layout': {
@@ -158,19 +178,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof adminAdminLayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/(store)/register/': {
-      id: '/(store)/register/'
+    '/(store)/_store-layout/': {
+      id: '/(store)/_store-layout/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof storeStoreLayoutIndexRouteImport
+      parentRoute: typeof storeStoreLayoutRoute
+    }
+    '/(store)/_store-layout/register/': {
+      id: '/(store)/_store-layout/register/'
       path: '/register'
       fullPath: '/register/'
-      preLoaderRoute: typeof storeRegisterIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof storeStoreLayoutRegisterIndexRouteImport
+      parentRoute: typeof storeStoreLayoutRoute
     }
-    '/(store)/login/': {
-      id: '/(store)/login/'
+    '/(store)/_store-layout/login/': {
+      id: '/(store)/_store-layout/login/'
       path: '/login'
       fullPath: '/login/'
-      preLoaderRoute: typeof storeLoginIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof storeStoreLayoutLoginIndexRouteImport
+      parentRoute: typeof storeStoreLayoutRoute
+    }
+    '/(store)/_store-layout/cart/': {
+      id: '/(store)/_store-layout/cart/'
+      path: '/cart'
+      fullPath: '/cart/'
+      preLoaderRoute: typeof storeStoreLayoutCartIndexRouteImport
+      parentRoute: typeof storeStoreLayoutRoute
     }
     '/(admin)/_admin-layout/admin/': {
       id: '/(admin)/_admin-layout/admin/'
@@ -231,11 +265,26 @@ const adminAdminLayoutRouteChildren: adminAdminLayoutRouteChildren = {
 const adminAdminLayoutRouteWithChildren =
   adminAdminLayoutRoute._addFileChildren(adminAdminLayoutRouteChildren)
 
+interface storeStoreLayoutRouteChildren {
+  storeStoreLayoutIndexRoute: typeof storeStoreLayoutIndexRoute
+  storeStoreLayoutCartIndexRoute: typeof storeStoreLayoutCartIndexRoute
+  storeStoreLayoutLoginIndexRoute: typeof storeStoreLayoutLoginIndexRoute
+  storeStoreLayoutRegisterIndexRoute: typeof storeStoreLayoutRegisterIndexRoute
+}
+
+const storeStoreLayoutRouteChildren: storeStoreLayoutRouteChildren = {
+  storeStoreLayoutIndexRoute: storeStoreLayoutIndexRoute,
+  storeStoreLayoutCartIndexRoute: storeStoreLayoutCartIndexRoute,
+  storeStoreLayoutLoginIndexRoute: storeStoreLayoutLoginIndexRoute,
+  storeStoreLayoutRegisterIndexRoute: storeStoreLayoutRegisterIndexRoute,
+}
+
+const storeStoreLayoutRouteWithChildren =
+  storeStoreLayoutRoute._addFileChildren(storeStoreLayoutRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
   adminAdminLayoutRoute: adminAdminLayoutRouteWithChildren,
-  storeLoginIndexRoute: storeLoginIndexRoute,
-  storeRegisterIndexRoute: storeRegisterIndexRoute,
+  storeStoreLayoutRoute: storeStoreLayoutRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

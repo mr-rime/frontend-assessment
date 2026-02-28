@@ -3,6 +3,7 @@ import type { Customer } from "../schemas";
 import { Checkbox } from "@/shared/components/ui/checkbox";
 import { DataTableColumnHeader } from "@/shared/components/data-table";
 import { formatDate } from "@/shared/lib/format-date";
+import { Button } from "@/shared/components/ui/button";
 
 
 
@@ -37,6 +38,17 @@ export const customersTableColumns: ColumnDef<Customer>[] = [
     {
         accessorKey: "name",
         header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
+        cell: ({ row }) => {
+            const name = row.original.name
+            return (<Button
+                variant="ghost"
+                size="sm"
+                className="-ml-3 h-10 focus-visible:ring-0"
+            >
+                <span>{name}</span>
+            </Button>
+            )
+        }
     },
     {
         accessorKey: "email",

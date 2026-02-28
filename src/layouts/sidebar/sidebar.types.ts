@@ -10,12 +10,6 @@ export type SidebarUser = {
     avatar: string
 }
 
-export type SidebarTeam = {
-    name: string
-    logo: LucideIcon
-    plan: "Free" | "Startup" | "Enterprise"
-}
-
 export type SidebarNavSubItem = {
     title: string
     url: UrlType
@@ -38,6 +32,5 @@ export type SidebarProject = {
 
 export type SidebarData = {
     user: SidebarUser
-    teams: SidebarTeam[]
     navMain: SidebarNavItem[]
 }

@@ -1,9 +1,6 @@
 
 
 import {
-    AudioWaveform,
-    Command,
-    GalleryVerticalEnd,
     ShoppingBag,
     Tag,
     Users,
@@ -13,27 +10,10 @@ import type { SidebarData } from "./sidebar.types"
 
 export const SIDEBAR_DATA: SidebarData = {
     user: {
-        name: "shadcn",
-        email: "m@example.com",
-        avatar: "/avatars/shadcn.jpg",
+        name: "admin",
+        email: "admin@gmail.com",
+        avatar: "/avatars/admin",
     },
-    teams: [
-        {
-            name: "Acme Inc",
-            logo: GalleryVerticalEnd,
-            plan: "Enterprise",
-        },
-        {
-            name: "Acme Corp.",
-            logo: AudioWaveform,
-            plan: "Startup",
-        },
-        {
-            name: "Evil Corp.",
-            logo: Command,
-            plan: "Free",
-        },
-    ],
 
     navMain: [
         {
