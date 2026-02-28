@@ -1,6 +1,6 @@
-import type { ProductType } from "@/features/admin/components/products/types";
+import type { Product } from "@/features/admin/components/products/schemas";
 
-export const PRODCUT_DATA: ProductType[] = [
+export const PRODCUT_DATA: Product[] = [
     {
         id: "1",
         name: "Apple iPhone 15 Pro",

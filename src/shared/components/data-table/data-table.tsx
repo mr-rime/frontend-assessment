@@ -17,20 +17,28 @@ import * as React from "react"
 import { DataTablePagination } from "./data-table-pagination"
 import { DataTableViewOptions } from "./data-table-view-options"
 import { DataTableFilter } from "./data-table-filter"
+import { DataTableFacetedFilter } from "./data-table-faceted-filter"
 import { Skeleton } from "../ui/skeleton"
 
 
+type FacetedFilter = {
+    columnId: string
+    title: string
+    options: { label: string, value: string }[]
+}
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
-    data: TData[]
+    data: TData[],
     isLoading?: boolean
+    facetedFilters?: FacetedFilter[]
 }
 
 export function DataTable<TData, TValue>({
     columns,
     data,
     isLoading,
+    facetedFilters,
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
@@ -57,10 +65,20 @@ export function DataTable<TData, TValue>({
     })
 
     return (
-        <div>
-            <div className="flex items-center py-4 justify-between">
+        <div className="space-y-4">
+            <div className="flex items-center gap-2">
                 <DataTableFilter table={table} />
-                <DataTableViewOptions table={table} />
+                {facetedFilters?.map((filter) => (
+                    <DataTableFacetedFilter
+                        key={filter.columnId}
+                        column={table.getColumn(filter.columnId)}
+                        title={filter.title}
+                        options={filter.options}
+                    />
+                ))}
+                <div className="ml-auto">
+                    <DataTableViewOptions table={table} />
+                </div>
             </div>
             <div className="overflow-hidden rounded-md border">
                 <Table>

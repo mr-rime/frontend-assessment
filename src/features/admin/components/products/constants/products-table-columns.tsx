@@ -6,7 +6,7 @@ import type { ColumnDef } from "@tanstack/react-table"
 import { ChevronRight, Image, MoreHorizontal, Trash } from "lucide-react"
 import { DataTableColumnHeader } from "@/shared/components/data-table"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/components/ui/tooltip"
-import { formatNumberToUSD } from "@/lib/format-number-to-usd"
+import { formatNumberToUSD } from "@/shared/lib/format-number-to-usd"
 import type { Product } from "../schemas/product.schema"
 
 export const productTableColumns: ColumnDef<Product>[] = [
@@ -38,11 +38,11 @@ export const productTableColumns: ColumnDef<Product>[] = [
     },
     {
         accessorKey: "image",
-        header: () => <div className="text-center">Image</div>,
+        header: () => <div>Image</div>,
         cell: ({ row }) => {
             const image = row.original.image
             return (
-                <div className="flex items-center justify-center">
+                <div >
                     {
                         image ? <img src={image} alt="product-image" className="h-15 w-15 rounded-sm" /> : <Image className="h-15 w-15 rounded-sm" />
                     }

@@ -1,4 +1,4 @@
-import { wait } from "@/lib/wait";
+import { wait } from "@/shared/lib/wait";
 import type { Product } from "../schemas/product.schema";
 import { db } from "@/db";
 

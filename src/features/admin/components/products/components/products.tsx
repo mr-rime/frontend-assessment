@@ -13,13 +13,11 @@ export function Products() {
         <AdminWrapper title="Products" controls={
             <NewProductDialog />
         }>
-            <div>
-                <DataTable
-                    columns={productTableColumns}
-                    data={products || []}
-                    isLoading={isLoading}
-                />
-            </div>
+            <DataTable
+                columns={productTableColumns}
+                data={products || []}
+                isLoading={isLoading}
+            />
         </AdminWrapper>
     )
 }

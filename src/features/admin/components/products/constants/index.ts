@@ -1,1 +1,1 @@
-export * from "./product-table-columns"
+export * from "./products-table-columns"
