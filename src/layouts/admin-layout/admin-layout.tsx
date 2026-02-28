@@ -1,9 +1,9 @@
 
 
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/shared/components/ui/breadcrumb"
 import { AppSidebar } from "../sidebar"
 import { Separator } from "@/shared/components/ui/separator"
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/shared/components/ui/sidebar"
+import { DynamicBreadcrumbs } from "@/shared/components/dynamic-breadcrumbs"
 
 export function AdminLayout({ children }: { children: React.ReactNode }) {
     return (
@@ -17,19 +17,7 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
                             orientation="vertical"
                             className="mr-2 data-[orientation=vertical]:h-4"
                         />
-                        <Breadcrumb>
-                            <BreadcrumbList>
-                                <BreadcrumbItem className="hidden md:block">
-                                    <BreadcrumbLink href="#">
-                                        Build Your Application
-                                    </BreadcrumbLink>
-                                </BreadcrumbItem>
-                                <BreadcrumbSeparator className="hidden md:block" />
-                                <BreadcrumbItem>
-                                    <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                                </BreadcrumbItem>
-                            </BreadcrumbList>
-                        </Breadcrumb>
+                        <DynamicBreadcrumbs />
                     </div>
                 </header>
                 {children}

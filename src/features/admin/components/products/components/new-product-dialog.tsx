@@ -117,7 +117,7 @@ export function NewProductDialog() {
                         {
                             !createProductMutation.isPending ?
                                 <Button className="w-full" form="product-form" type="submit">
-                                    Save
+                                    Create
                                 </Button> : <Button className="w-full">
                                     <Loader className="animate-spin" />
                                 </Button>
