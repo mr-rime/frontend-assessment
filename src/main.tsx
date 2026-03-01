@@ -10,6 +10,8 @@ import { TooltipProvider } from './shared/components/ui/tooltip'
 import { GoeyToaster } from './shared/components/ui/goey-toaster'
 import { useAdminAuthStore } from './features/admin/components/auth/store/admin-auth.store'
 import { useUserAuthStore } from './features/store/store/user-auth.store'
+import { ErrorBoundary } from 'react-error-boundary'
+import { ErrorFallback } from './shared/components/error-fallback/error-fallback'
 
 const router = createRouter({
   routeTree,
@@ -32,7 +34,11 @@ function App() {
   const adminAuth = useAdminAuthStore()
   const userAuth = useUserAuthStore()
 
-  return <RouterProvider router={router} context={{ adminAuth, userAuth }} />
+  return (
+    <ErrorBoundary FallbackComponent={ErrorFallback}>
+      <RouterProvider router={router} context={{ adminAuth, userAuth }} />
+    </ErrorBoundary>
+  )
 }
 
 const rootElement = document.getElementById('root')!

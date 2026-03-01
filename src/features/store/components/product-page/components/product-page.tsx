@@ -15,23 +15,23 @@ import {
 } from "@/shared/components/ui/breadcrumb";
 import { getProductQueryOptions } from "../queries/product.queries";
 import { useCartStore } from "@/features/store/components/cart/store";
-import type { Customer } from "@/features/admin/components/customers/schemas";
 import { useAddToCart } from "../hooks/use-add-to-cart";
+import { useUserAuthStore } from "@/features/store/store/user-auth.store";
+import { NotFound } from "@/shared/components/not-found/not-found";
 
 export function ProductPage() {
     const { productId } = useParams({ from: "/(store)/_store-layout/product/$productId/" });
     const { data: product, isLoading } = useQuery(getProductQueryOptions(productId));
     const addToCart = useCartStore((state) => state.addToCart);
     const addToCartMutation = useAddToCart();
-
-    const customer: Customer | undefined = undefined;
+    const customer = useUserAuthStore((state) => state.user);
 
     if (isLoading) {
         return <ProductPageSkeleton />;
     }
 
     if (!product) {
-        return <div>Product not found</div>;
+        return <NotFound title="Product Not Found" message="We couldn't find the product you're looking for." />;
     }
 
     const handleAddToCart = () => {

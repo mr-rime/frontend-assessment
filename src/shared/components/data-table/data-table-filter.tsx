@@ -64,7 +64,7 @@ export function DataTableFilter<TData>({ table }: { table: Table<TData> }) {
                             <Button
                                 variant="outline"
                                 size="sm"
-                                className="ml-auto hidden h-9 lg:flex"
+                                className="ml-auto  h-9 "
                             >
                                 <Funnel />
                             </Button>
