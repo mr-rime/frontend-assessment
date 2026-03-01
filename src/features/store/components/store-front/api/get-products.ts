@@ -7,14 +7,20 @@ export const getProducts = async ({
     currentPage,
     pageSize,
     sortBy,
-    order
+    order,
+    category
 }: {
     currentPage: number,
     pageSize: number,
     sortBy?: string,
-    order?: 'asc' | 'desc'
+    order?: 'asc' | 'desc',
+    category?: string[]
 }): Promise<Paginated<Product[]>> => {
     let products = [...(db.products || [])];
+
+    if (category && category.length > 0) {
+        products = products.filter(p => category.includes(p.category));
+    }
 
     if (sortBy === 'price') {
         products.sort((a, b) => {

@@ -3,7 +3,7 @@ import { formatNumberToUSD } from "@/shared/lib/format-number-to-usd";
 import { Link } from "@tanstack/react-router";
 import { Image } from "@unpic/react";
 
-export function Product({ id, name, price }: Product) {
+export function Product({ id, name, price, image }: Product) {
     return (
         <Link
             key={id}
@@ -18,7 +18,7 @@ export function Product({ id, name, price }: Product) {
                     width={500}
                     height={500}
                     loading="lazy"
-                    src="/image-1.webp"
+                    src={image || "/image-1.webp"}
                     alt="Product 1"
                 />
             </div>

@@ -8,7 +8,16 @@ import "./index.css"
 import { ThemeProvider } from './providers/theme-provider'
 import { TooltipProvider } from './shared/components/ui/tooltip'
 import { GoeyToaster } from './shared/components/ui/goey-toaster'
-const router = createRouter({ routeTree })
+import { useAdminAuthStore } from './features/admin/components/auth/store/admin-auth.store'
+import { useUserAuthStore } from './features/store/store/user-auth.store'
+
+const router = createRouter({
+  routeTree,
+  context: {
+    adminAuth: undefined!,
+    userAuth: undefined!,
+  },
+})
 const queryClient = new QueryClient()
 
 
@@ -16,6 +25,14 @@ declare module '@tanstack/react-router' {
   interface Register {
     router: typeof router
   }
+}
+
+// eslint-disable-next-line react-refresh/only-export-components
+function App() {
+  const adminAuth = useAdminAuthStore()
+  const userAuth = useUserAuthStore()
+
+  return <RouterProvider router={router} context={{ adminAuth, userAuth }} />
 }
 
 const rootElement = document.getElementById('root')!
@@ -26,7 +43,7 @@ if (!rootElement.innerHTML) {
       <ThemeProvider defaultTheme="dark" storageKey="market-ui-theme">
         <TooltipProvider>
           <QueryClientProvider client={queryClient}>
-            <RouterProvider router={router} />
+            <App />
             <GoeyToaster position='top-center' duration={1000} />
           </QueryClientProvider>
         </TooltipProvider>

@@ -3,16 +3,15 @@ import { useQuery } from "@tanstack/react-query";
 import { getProductsQueryOptions } from "../queries/products.queries";
 import { Product } from "./product";
 import { ProductSkeleton } from "./product-skeleton";
-import { getRouteApi, useNavigate } from "@tanstack/react-router";
+import { getRouteApi } from "@tanstack/react-router";
 import { ProductsFilter } from "./products-filter";
 
 const pageSize = 12;
 const routeApi = getRouteApi('/(store)/_store-layout/')
 
 export function ProductsGrid() {
-    const navigate = useNavigate({ from: "/" });
-
-    const { page = 1, sortBy, order} = routeApi.useSearch();
+    const navigate = routeApi.useNavigate();
+    const { page = 1, sortBy, order, category } = routeApi.useSearch();
 
     const currentPage = Number(page) || 1;
 
@@ -22,6 +21,7 @@ export function ProductsGrid() {
             pageSize,
             sortBy,
             order,
+            category,
         })
     );
 
@@ -33,6 +33,7 @@ export function ProductsGrid() {
                 page: nextPage,
                 sortBy,
                 order,
+                category,
             },
         });
     };

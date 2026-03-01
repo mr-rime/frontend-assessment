@@ -599,6 +599,8 @@ function SidebarMenuBadge({
   )
 }
 
+const random = Math.random()
+
 function SidebarMenuSkeleton({
   className,
   showIcon = false,
@@ -608,7 +610,7 @@ function SidebarMenuSkeleton({
 }) {
   // Random width between 50 to 90%.
   const width = React.useMemo(() => {
-    return `${Math.floor(Math.random() * 40) + 50}%`
+    return `${Math.floor(random * 40) + 50}%`
   }, [])
 
   return (
@@ -722,5 +724,6 @@ export {
   SidebarRail,
   SidebarSeparator,
   SidebarTrigger,
+  // eslint-disable-next-line react-refresh/only-export-components
   useSidebar,
 }

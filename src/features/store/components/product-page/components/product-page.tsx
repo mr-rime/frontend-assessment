@@ -1,7 +1,7 @@
 import { Button } from "@/shared/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { Image } from "@unpic/react";
-import { ShoppingCart } from "lucide-react";
+import { Loader, ShoppingCart } from "lucide-react";
 import { Link, useParams } from "@tanstack/react-router";
 import { formatNumberToUSD } from "@/shared/lib/format-number-to-usd";
 import { ProductPageSkeleton } from "./product-page-skeleton";
@@ -16,11 +16,13 @@ import {
 import { getProductQueryOptions } from "../queries/product.queries";
 import { useCartStore } from "@/features/store/components/cart/store";
 import type { Customer } from "@/features/admin/components/customers/schemas";
+import { useAddToCart } from "../hooks/use-add-to-cart";
 
 export function ProductPage() {
     const { productId } = useParams({ from: "/(store)/_store-layout/product/$productId/" });
     const { data: product, isLoading } = useQuery(getProductQueryOptions(productId));
     const addToCart = useCartStore((state) => state.addToCart);
+    const addToCartMutation = useAddToCart();
 
     const customer: Customer | undefined = undefined;
 
@@ -32,13 +34,18 @@ export function ProductPage() {
         return <div>Product not found</div>;
     }
 
+    const handleAddToCart = () => {
+        addToCartMutation.mutate();
+        addToCart(product, customer || { name: "Guest", email: "guest@example.com" })
+    };
+
     return (
         <div className="container mx-auto px-4 py-8 mt-16 space-y-8">
             <Breadcrumb>
                 <BreadcrumbList>
                     <BreadcrumbItem>
                         <BreadcrumbLink asChild>
-                            <Link to="/" search={{ page: 1, sortBy: 'name', order: 'asc' }}>Products</Link>
+                            <Link to="/" search={{ page: 1, sortBy: 'name', order: 'asc', category: [] }}>Products</Link>
                         </BreadcrumbLink>
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
@@ -87,12 +94,18 @@ export function ProductPage() {
                     <div className="pt-4">
                         {
                             product.stock > 0 ? (
-                                <Button
-                                    className="w-full py-4"
-                                    onClick={() => addToCart(product, customer || { name: "Guest", email: "guest@example.com" })}
-                                >
-                                    <ShoppingCart /> <span className="text-sm">Add to Cart</span>
-                                </Button>
+                                addToCartMutation.isPending ? (
+                                    <Button className="w-full py-4" disabled>
+                                        <span className="text-sm"><Loader className="animate-spin" /></span>
+                                    </Button>
+                                ) : (
+                                    <Button
+                                        className="w-full py-4"
+                                        onClick={handleAddToCart}
+                                    >
+                                        <ShoppingCart /> <span className="text-sm">Add to Cart</span>
+                                    </Button>
+                                )
                             ) : (
                                 <Button className="w-full py-4" disabled>
                                     <ShoppingCart /> <span className="text-sm">Out of Stock</span>

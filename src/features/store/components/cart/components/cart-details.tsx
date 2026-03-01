@@ -4,6 +4,8 @@ import { Button } from "@/shared/components/ui/button";
 import { useCartStore } from "../store";
 import { useLocalStorage } from "@/shared/hooks/use-local-storage";
 import type { LocalOrder } from "@/shared/types";
+import { useCheckout } from "../hooks/use-checkout";
+import { Loader } from "lucide-react";
 
 type CartDetailsProps = {
     total: number;
@@ -14,8 +16,10 @@ export function CartDetails({ total, cart }: CartDetailsProps) {
     const clearCart = useCartStore((state) => state.clearCart);
     const [orders, setOrders] = useLocalStorage<LocalOrder[]>("orders", []);
     const customer = cart[0]?.customer || { name: "Guest", email: "guest@example.com" };
+    const checkoutMuation = useCheckout();
 
     const handleCheckout = () => {
+        checkoutMuation.mutate()
         setOrders([...orders, { id: crypto.randomUUID(), status: "pending", products: cart.map((item) => item.product), total, customer, createdAt: new Date(), updatedAt: new Date() }]);
         clearCart();
     };
@@ -33,9 +37,15 @@ export function CartDetails({ total, cart }: CartDetailsProps) {
 
                 {
                     cart.length > 0 ? (
-                        <Button className="w-full" onClick={handleCheckout}>
-                            Proceed to checkout
-                        </Button>
+                        checkoutMuation.isPending ? (
+                            <Button className="w-full" disabled>
+                                <Loader className="animate-spin" />
+                            </Button>
+                        ) : (
+                            <Button className="w-full" onClick={handleCheckout}>
+                                Proceed to checkout
+                            </Button>
+                        )
                     ) : (
                         <Button className="w-full" disabled>
                             Proceed to checkout
