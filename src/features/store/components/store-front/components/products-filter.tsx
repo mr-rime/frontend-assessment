@@ -38,7 +38,7 @@ export function ProductsFilter() {
                     <ChevronDown className="h-4 w-4 text-muted-foreground ml-2" />
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-full sm:w-50 align-end">
+            <DropdownMenuContent className="sm:w-50 w-(--radix-dropdown-menu-trigger-width) align-end">
                 {sortOptions.map((option) => (
                     <DropdownMenuItem
                         key={option.value}
