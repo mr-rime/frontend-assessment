@@ -1,9 +1,6 @@
+import { Cart } from '@/features/store/components/cart/components'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/(store)/_store-layout/cart/')({
-    component: RouteComponent,
+    component: Cart,
 })
-
-function RouteComponent() {
-    return <div>Hello "/(store)/_store-layout/cart/"!</div>
-}

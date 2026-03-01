@@ -14,10 +14,15 @@ import {
     BreadcrumbSeparator,
 } from "@/shared/components/ui/breadcrumb";
 import { getProductQueryOptions } from "../queries/product.queries";
+import { useCartStore } from "@/features/store/components/cart/store";
+import type { Customer } from "@/features/admin/components/customers/schemas";
 
 export function ProductPage() {
     const { productId } = useParams({ from: "/(store)/_store-layout/product/$productId/" });
     const { data: product, isLoading } = useQuery(getProductQueryOptions(productId));
+    const addToCart = useCartStore((state) => state.addToCart);
+
+    const customer: Customer | undefined = undefined;
 
     if (isLoading) {
         return <ProductPageSkeleton />;
@@ -46,7 +51,7 @@ export function ProductPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
                 <div className="lg:sticky lg:top-20 lg:self-start">
                     <div className="space-y-4">
-                        <div className="relative aspect-square bg-muted rounded-lg overflow-hidden group">
+                        <div className="relative aspect-square bg-muted rounded-lg overflow-hidden group max-w-xl mx-auto lg:mx-0">
                             <Image
                                 src={product.image || ""}
                                 layout="constrained"
@@ -82,7 +87,10 @@ export function ProductPage() {
                     <div className="pt-4">
                         {
                             product.stock > 0 ? (
-                                <Button className="w-full py-4">
+                                <Button
+                                    className="w-full py-4"
+                                    onClick={() => addToCart(product, customer || { name: "Guest", email: "guest@example.com" })}
+                                >
                                     <ShoppingCart /> <span className="text-sm">Add to Cart</span>
                                 </Button>
                             ) : (

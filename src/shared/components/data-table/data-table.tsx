@@ -29,10 +29,10 @@ type FacetedFilter = {
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
-    data: TData[],
+    data: TData[] ,
     isLoading?: boolean
     facetedFilters?: FacetedFilter[]
-}
+} 
 
 export function DataTable<TData, TValue>({
     columns,

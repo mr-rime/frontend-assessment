@@ -7,7 +7,7 @@ export function ProductPageSkeleton() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
                 <div className="lg:sticky lg:top-20 lg:self-start">
                     <div className="space-y-4">
-                        <div className="relative aspect-square">
+                        <div className="relative aspect-square bg-muted rounded-lg overflow-hidden group max-w-xl mx-auto lg:mx-0">
                             <Skeleton className="w-full h-full rounded-lg" />
                         </div>
                     </div>

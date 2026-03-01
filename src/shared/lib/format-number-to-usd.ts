@@ -6,5 +6,5 @@ export function formatNumberToUSD(num: number) {
         currency: "USD"
     }).format(num)
 
-    return formattedNumber
+    return formattedNumber ?? "$0.00"
 }

@@ -1,4 +1,5 @@
 import * as z from "zod";
+import { CustomerSchema } from "../../customers/schemas";
 
 const OrderStatusEnum = z.enum([
     "pending",
@@ -11,7 +12,7 @@ const OrderStatusEnum = z.enum([
 const OrderSchema = z.object({
     id: z.string().optional(),
     status: OrderStatusEnum,
-    customer: z.string(),
+    customer: CustomerSchema,
     total: z.number(),
     createdAt: z.date().optional(),
     updatedAt: z.date().optional(),
