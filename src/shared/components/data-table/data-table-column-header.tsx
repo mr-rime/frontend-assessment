@@ -43,8 +43,10 @@ export function DataTableColumnHeader<TData, TValue>({
                 size="sm"
                 className="-ml-3 h-8 focus-visible:ring-0"
                 onClick={() => {
-                    column.toggleSorting()
-                    debouncedSort(column.getIsSorted() === "asc" ? "desc" : "asc")
+                    const currentSort = column.getIsSorted()
+                    const nextOrder = currentSort === "asc" ? "desc" : "asc"
+                    column.toggleSorting(nextOrder === "desc")
+                    debouncedSort(nextOrder)
                 }}
             >
                 <span>{title}</span>
