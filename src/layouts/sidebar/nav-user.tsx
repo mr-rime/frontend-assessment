@@ -5,6 +5,9 @@ import {
     ChevronsUpDown,
     LogOut,
 } from "lucide-react"
+import { useAdminAuthStore } from "@/features/admin/components/auth/store/admin-auth.store"
+import { useNavigate } from "@tanstack/react-router"
+import { goeyToast } from "goey-toast"
 
 export function NavUser({
     user,
@@ -16,6 +19,17 @@ export function NavUser({
     }
 }) {
     const { isMobile } = useSidebar()
+    const { logout, admin } = useAdminAuthStore()
+    const navigate = useNavigate()
+
+    const handleLogout = () => {
+        logout()
+        goeyToast.success("Logged out successfully")
+        navigate({ to: "/admin/login" })
+    }
+
+    const displayName = admin?.name ?? user.name
+    const displayEmail = admin?.email ?? user.email
 
     return (
         <SidebarMenu>
@@ -27,12 +41,12 @@ export function NavUser({
                             className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                         >
                             <Avatar className="h-8 w-8 rounded-lg">
-                                <AvatarImage src={user.avatar} alt={user.name} />
+                                <AvatarImage src={user.avatar} alt={displayName} />
                                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                             </Avatar>
                             <div className="grid flex-1 text-left text-sm leading-tight">
-                                <span className="truncate font-medium">{user.name}</span>
-                                <span className="truncate text-xs">{user.email}</span>
+                                <span className="truncate font-medium">{displayName}</span>
+                                <span className="truncate text-xs">{displayEmail}</span>
                             </div>
                             <ChevronsUpDown className="ml-auto size-4" />
                         </SidebarMenuButton>
@@ -46,17 +60,17 @@ export function NavUser({
                         <DropdownMenuLabel className="p-0 font-normal">
                             <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                                 <Avatar className="h-8 w-8 rounded-lg">
-                                    <AvatarImage src={user.avatar} alt={user.name} />
+                                    <AvatarImage src={user.avatar} alt={displayName} />
                                     <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                                 </Avatar>
                                 <div className="grid flex-1 text-left text-sm leading-tight">
-                                    <span className="truncate font-medium">{user.name}</span>
-                                    <span className="truncate text-xs">{user.email}</span>
+                                    <span className="truncate font-medium">{displayName}</span>
+                                    <span className="truncate text-xs">{displayEmail}</span>
                                 </div>
                             </div>
                         </DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
                             <LogOut />
                             Log out
                         </DropdownMenuItem>

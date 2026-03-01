@@ -1,8 +1,7 @@
-import { useCallback, useEffect, useState } from 'react'
-
 import type { Dispatch, SetStateAction } from 'react'
 import { useEventCallback } from './use-event-callback'
 import { useEventListener } from './use-event-listener'
+import * as React from "react"
 
 
 declare global {
@@ -26,7 +25,7 @@ export function useLocalStorage<T>(
 ): [T, Dispatch<SetStateAction<T>>, () => void] {
     const { initializeWithValue = true } = options
 
-    const serializer = useCallback<(value: T) => string>(
+    const serializer = React.useCallback<(value: T) => string>(
         value => {
             if (options.serializer) {
                 return options.serializer(value)
@@ -37,7 +36,7 @@ export function useLocalStorage<T>(
         [options],
     )
 
-    const deserializer = useCallback<(value: string) => T>(
+    const deserializer = React.useCallback<(value: string) => T>(
         value => {
             if (options.deserializer) {
                 return options.deserializer(value)
@@ -62,7 +61,7 @@ export function useLocalStorage<T>(
         [options, initialValue],
     )
 
-    const readValue = useCallback((): T => {
+    const readValue = React.useCallback((): T => {
         const initialValueToUse =
             initialValue instanceof Function ? initialValue() : initialValue
 
@@ -79,7 +78,7 @@ export function useLocalStorage<T>(
         }
     }, [initialValue, key, deserializer])
 
-    const [storedValue, setStoredValue] = useState(() => {
+    const [storedValue, setStoredValue] = React.useState(() => {
         if (initializeWithValue) {
             return readValue()
         }
@@ -124,12 +123,12 @@ export function useLocalStorage<T>(
         window.dispatchEvent(new StorageEvent('local-storage', { key }))
     })
 
-    useEffect(() => {
+    React.useEffect(() => {
         setStoredValue(readValue())
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [key])
 
-    const handleStorageChange = useCallback(
+    const handleStorageChange = React.useCallback(
         (event: StorageEvent | CustomEvent) => {
             if ((event as StorageEvent).key && (event as StorageEvent).key !== key) {
                 return

@@ -11,7 +11,7 @@ import type { SidebarData } from "./sidebar.types"
 export const SIDEBAR_DATA: SidebarData = {
     user: {
         name: "admin",
-        email: "admin@gmail.com",
+        email: "admin@admin.com",
         avatar: "/avatars/admin",
     },
 

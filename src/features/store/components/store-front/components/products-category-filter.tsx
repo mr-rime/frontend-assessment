@@ -2,7 +2,7 @@ import { Checkbox } from "@/shared/components/ui/checkbox";
 import { Label } from "@/shared/components/ui/label";
 import { PRODCUT_DATA } from "@/db/products";
 import { getRouteApi } from "@tanstack/react-router";
-import { useMemo } from "react";
+import * as React from "react";
 
 const routeApi = getRouteApi("/(store)/_store-layout/")
 
@@ -10,7 +10,7 @@ export function ProductsCategoryFilter() {
   const searchParams = routeApi.useSearch();
   const navigate = routeApi.useNavigate();
 
-  const categories = useMemo(() => {
+  const categories = React.useMemo(() => {
     const uniqueCategories = new Set(PRODCUT_DATA.map(p => p.category));
     return Array.from(uniqueCategories);
   }, []);

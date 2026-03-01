@@ -93,6 +93,11 @@ export function DataTable<TData, TValue>({
         }
     })
 
+    React.useEffect(() => {
+        table.setPageIndex(0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [columnFilters]);
+
     return (
         <div className="space-y-4">
             <div className="flex items-center gap-2">

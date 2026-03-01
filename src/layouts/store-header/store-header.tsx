@@ -7,7 +7,7 @@ import { goeyToast } from "goey-toast";
 import { ShoppingCart, User, Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/shared/components/ui/sheet";
 import type { Customer } from "@/features/admin/components/customers/schemas";
-import { useState, useEffect, useEffectEvent } from "react";
+import * as React from "react";
 import { useDebounce } from "@/shared/hooks/use-debounce";
 
 export function StoreHeader() {
@@ -15,7 +15,7 @@ export function StoreHeader() {
     const { isAuthenticated, user, logout } = useUserAuthStore();
     const navigate = useNavigate();
     const search = useSearch({ from: '/(store)/_store-layout' });
-    const [searchValue, setSearchValue] = useState(search.q || "");
+    const [searchValue, setSearchValue] = React.useState(search.q || "");
 
     const handleLogout = () => {
         logout();
@@ -42,9 +42,9 @@ export function StoreHeader() {
         debouncedNavigate(value);
     }
 
-    const setSearchValueEffect = useEffectEvent(setSearchValue);
+    const setSearchValueEffect = React.useEffectEvent(setSearchValue);
 
-    useEffect(() => {
+    React.useEffect(() => {
         setSearchValueEffect(search.q || "");
     }, [search.q]);
 

@@ -24,7 +24,7 @@ export function DataTableColumnHeader<TData, TValue>({
     const debouncedSort = useDebounce((value) => {
         navigate({
             to: ".",
-            search: (prev: Record<string, unknown>) => ({
+            search: (prev) => ({
                 ...prev,
                 order: value,
                 sortBy: column.id,

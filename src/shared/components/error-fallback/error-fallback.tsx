@@ -1,23 +1,15 @@
 import { Button } from "@/shared/components/ui/button";
-import { AlertCircle, RotateCcw, Home } from "lucide-react";
+import { RotateCcw, Home } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import type { FallbackProps } from "react-error-boundary";
 
-export function ErrorFallback({ error, resetErrorBoundary }:  Partial<FallbackProps>) {
+export function ErrorFallback({ error, resetErrorBoundary }: Partial<FallbackProps>) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     const errorStack = error instanceof Error ? error.stack : null;
 
     return (
         <div className="min-h-screen flex items-center justify-center p-4 bg-background">
             <div className="max-w-md w-full space-y-8 text-center bg-card p-10 rounded-2xl border shadow-2xl relative overflow-hidden group">
-                <div className="absolute top-0 left-0 w-full h-1 bg-destructive/50" />
-
-                <div className="flex justify-center">
-                    <div className="p-4 bg-destructive/10 rounded-full text-destructive animate-pulse">
-                        <AlertCircle size={48} />
-                    </div>
-                </div>
-
                 <div className="space-y-2">
                     <h1 className="text-3xl font-extrabold tracking-tight">Oops! Something went wrong</h1>
                     <p className="text-muted-foreground text-sm">
@@ -25,7 +17,7 @@ export function ErrorFallback({ error, resetErrorBoundary }:  Partial<FallbackPr
                     </p>
                 </div>
 
-                <div className="p-4 bg-muted/50 rounded-lg text-left overflow-auto max-h-40 border transition-colors hover:border-destructive/30">
+                <div className="p-4 bg-muted/50 rounded-lg text-left overflow-auto max-h-40 border transition-colors ">
                     <p className="text-xs font-mono text-destructive/80 wrap-break-word">
                         {errorMessage}
                     </p>
@@ -55,10 +47,6 @@ export function ErrorFallback({ error, resetErrorBoundary }:  Partial<FallbackPr
                         </Link>
                     </Button>
                 </div>
-
-                <p className="text-xs text-muted-foreground/60 italic pt-2">
-                    If this persists, please contact support.
-                </p>
             </div>
         </div>
     );

@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 import { Funnel } from "lucide-react";
 import { Input } from "../ui/input";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
-import React, { useState } from "react";
+import * as React from "react";
 import { useDebounce } from "@/shared/hooks/use-debounce";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 
@@ -23,8 +23,8 @@ export function DataTableFilter<TData>({ table }: { table: Table<TData> }) {
     const search = useSearch({ strict: false });
 
     const firstColumnId = filterableColumns[0]?.id ?? "";
-    const [currentFilter, setCurrentFilter] = useState(search.filterBy ?? firstColumnId);
-    const [inputValue, setInputValue] = useState(search.q ?? "");
+    const [currentFilter, setCurrentFilter] = React.useState(search.filterBy ?? firstColumnId);
+    const [inputValue, setInputValue] = React.useState(search.q ?? "");
 
 
     const debouncedSearch = useDebounce((value: string, filterBy: string) => {
@@ -33,14 +33,12 @@ export function DataTableFilter<TData>({ table }: { table: Table<TData> }) {
 
         navigate({
             to: ".",
-            search: {
-                order: search.order,
-                sortBy: search.sortBy,
-                page: search.page,
+            search: (prev) => ({
+                ...prev,
                 q: value,
-                pageSize: table.getState().pagination.pageSize,
                 filterBy,
-            }
+                page: 1,
+            })
         });
     }, 300);
 
@@ -89,7 +87,7 @@ export function DataTableFilter<TData>({ table }: { table: Table<TData> }) {
                                 const nextSearch = {
                                     order: search.order,
                                     sortBy: search.sortBy,
-                                    page: search.page,
+                                    page: 1,
                                     q: "",
                                     pageSize: table.getState().pagination.pageSize,
                                     filterBy: column.id,

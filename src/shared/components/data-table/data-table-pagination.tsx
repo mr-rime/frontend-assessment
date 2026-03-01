@@ -7,7 +7,7 @@ import {
 } from "lucide-react"
 import { Button } from "../ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
-import { useNavigate, useSearch, } from "@tanstack/react-router"
+import { useNavigate } from "@tanstack/react-router"
 import { useDebounce } from "@/shared/hooks/use-debounce"
 
 
@@ -20,13 +20,12 @@ export function DataTablePagination<TData>({
     table,
 }: DataTablePaginationProps<TData>) {
     const navigate = useNavigate();
-    const search = useSearch({ strict: false });
     const debouncedPagination = useDebounce(() => {
         navigate({
             to: ".",
-            search: (prev: Record<string, unknown>) => ({
+            search: (prev) => ({
                 ...prev,
-                page: search.page,
+                page: table.getState().pagination.pageIndex + 1,
                 pageSize: table.getState().pagination.pageSize,
             }),
         })
