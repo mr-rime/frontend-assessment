@@ -1,5 +1,5 @@
 
-import * as z from "zod";
+import { z } from "zod";
 
 const ProductSchema = z.object({
     id: z.string().optional(),
@@ -13,12 +13,12 @@ const ProductSchema = z.object({
 
     description: z.string().optional(),
 
-    price: z.coerce.number().nonnegative()
+    price: z.number().nonnegative()
         .min(1, { message: "Price must be at least 1" }),
 
     image: z.string().optional(),
 
-    stock: z.coerce.number().nonnegative()
+    stock: z.number().nonnegative()
         .min(1, { message: "Stock must be at least 1" }),
 });
 
