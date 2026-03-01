@@ -9,6 +9,7 @@ interface CartState {
     removeFromCart: (product: Product, customer?: Customer) => void;
     updateQuantity: (product: Product, quantity: number, customer?: Customer) => void;
     clearCart: () => void;
+    syncCartWithCustomer: (customer?: Customer) => void;
 }
 
 
@@ -46,4 +47,7 @@ export const useCartStore = create<CartState>()((set) => ({
         ),
     })),
     clearCart: () => set({ cart: [] }),
-}));
+    syncCartWithCustomer: (customer) => set((state) => ({
+        cart: state.cart.map(item => ({ ...item, customer }))
+    })),
+})),

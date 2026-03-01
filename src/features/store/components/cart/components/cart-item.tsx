@@ -13,13 +13,7 @@ export function CartItem({ product, quantity }: { product: Product; quantity: nu
 
     return (
         <div className="flex flex-col sm:flex-row gap-4 p-4 border rounded-lg  bg-card">
-            <Link to="/product/$productId" params={{ productId: id || "" }} search={{
-                page: 1,
-                order: 'asc',
-                sortBy: 'name',
-                category: [],
-                q: ''
-            }} className="shrink-0">
+            <Link to="/product/$productId" preload="intent" params={{ productId: id || "" }} className="shrink-0">
                 <Image
                     className="rounded-md object-cover w-full sm:w-30 h-30"
                     layout="constrained"
@@ -31,13 +25,7 @@ export function CartItem({ product, quantity }: { product: Product; quantity: nu
                 />
             </Link>
             <div className="grow min-w-0 flex flex-col justify-between">
-                <Link to="/product/$productId" params={{ productId: id || "" }} search={{
-                    page: 1,
-                    order: 'asc',
-                    sortBy: 'name',
-                    category: [],
-                    q: ''
-                }} className="font-semibold hover:underline block">
+                <Link to="/product/$productId" preload="intent" params={{ productId: id || "" }} className="font-semibold hover:underline block">
                     {name}
                 </Link>
                 <div className="flex items-center gap-3 mt-4">

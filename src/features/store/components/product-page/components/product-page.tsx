@@ -45,7 +45,7 @@ export function ProductPage() {
                 <BreadcrumbList>
                     <BreadcrumbItem>
                         <BreadcrumbLink asChild>
-                            <Link to="/">Products</Link>
+                            <Link to="/" preload="intent">Products</Link>
                         </BreadcrumbLink>
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />

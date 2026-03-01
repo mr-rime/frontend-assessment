@@ -18,7 +18,7 @@ export function Cart() {
                         <h2 className="text-2xl font-semibold mb-4">Your cart is empty.</h2>
                         <p className="text-muted-foreground">Add some items to your cart to get started</p>
                         <Button className="mt-6" asChild>
-                            <Link to="/" search={{ page: 1, order: "asc", sortBy: "name", category: [], q: '' }}>Continue Shopping</Link>
+                            <Link to="/" preload="intent">Continue Shopping</Link>
                         </Button>
                     </div>
                 )

@@ -64,7 +64,7 @@ export function StoreHeader() {
                                     <SheetTitle>Menu</SheetTitle>
                                 </SheetHeader>
                                 <div className="mt-8 flex flex-col gap-6">
-                                    <Link to="/" className="text-lg font-semibold border-b pb-2">
+                                    <Link to="/" className="text-lg font-semibold border-b pb-2" preload="intent">
                                         Home
                                     </Link>
                                     <div className="space-y-4">
@@ -74,7 +74,7 @@ export function StoreHeader() {
                                 </div>
                             </SheetContent>
                         </Sheet>
-                        <Link to="/" className="font-bold text-xl whitespace-nowrap">
+                        <Link to="/" className="font-bold text-xl whitespace-nowrap" preload="intent">
                             Frontend Store
                         </Link>
                     </div>

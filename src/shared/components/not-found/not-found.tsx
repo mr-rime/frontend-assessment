@@ -30,7 +30,7 @@ export function NotFound({
                         asChild
                         className="w-full gap-2 transition-transform active:scale-95"
                     >
-                        <Link to="/" search={{ page: 1, sortBy: 'name', order: 'asc', category: [], q: '' }}>
+                        <Link to="/" preload="intent">
                             <Home size={18} />
                             Back to Shop
                         </Link>

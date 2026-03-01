@@ -41,7 +41,7 @@ export function ErrorFallback({ error, resetErrorBoundary }: Partial<FallbackPro
                         asChild
                         className="w-full gap-2 transition-transform active:scale-95"
                     >
-                        <Link to="/" search={{ page: 1, sortBy: 'name', order: 'asc', category: [], q: '' }} onClick={resetErrorBoundary}>
+                        <Link to="/" preload="intent" onClick={resetErrorBoundary}>
                             <Home size={18} />
                             Go home
                         </Link>

@@ -27,7 +27,7 @@ export function DynamicBreadcrumbs({ homePage }: { homePage?: FileRouteTypes["to
             <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
                     <BreadcrumbLink asChild>
-                        <Link to={homePage || "/"}>Home</Link>
+                        <Link to={homePage || "/"} preload="intent">Home</Link>
                     </BreadcrumbLink>
                 </BreadcrumbItem>
 
@@ -44,7 +44,7 @@ export function DynamicBreadcrumbs({ homePage }: { homePage?: FileRouteTypes["to
                                     <BreadcrumbPage>{capitalizedLabel}</BreadcrumbPage>
                                 ) : (
                                     <BreadcrumbLink asChild>
-                                        <Link to={match.pathname}>{capitalizedLabel}</Link>
+                                        <Link to={match.pathname} preload="intent">{capitalizedLabel}</Link>
                                     </BreadcrumbLink>
                                 )}
                             </BreadcrumbItem>
