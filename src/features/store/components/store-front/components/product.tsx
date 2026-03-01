@@ -7,6 +7,7 @@ export function Product({ id, name, price, image }: Product) {
     return (
         <Link
             key={id}
+            preload={"intent"}
             to="/product/$productId"
             params={{ productId: id || "" }}
             className="group block bg-card rounded-lg overflow-hidden border border-border hover:shadow-lg transition-shadow"

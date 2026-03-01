@@ -91,7 +91,7 @@ export function StoreHeader() {
                                 </div>
                             )}
                             <Button variant={"ghost"} size="icon" asChild>
-                                <Link to="/cart">
+                                <Link to="/cart" preload="intent" >
                                     <ShoppingCart size={21} />
                                 </Link>
                             </Button>
@@ -123,7 +123,7 @@ const UserMenu = ({ isMobile = false, isAuthenticated, user, handleLogout }: { i
             </div>
         ) : (
             <Button variant={"ghost"} asChild className={isMobile ? "w-full justify-start" : ""}>
-                <Link to="/login">Sign In</Link>
+                <Link to="/login" preload={"intent"}>Sign In</Link>
             </Button>
         )}
     </>
