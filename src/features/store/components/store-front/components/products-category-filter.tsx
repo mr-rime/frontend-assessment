@@ -27,6 +27,7 @@ export function ProductsCategoryFilter() {
         ...prev,
         category: newCategories.length ? newCategories : undefined,
         page: 1,
+        q: prev.q,
       })
     });
   };

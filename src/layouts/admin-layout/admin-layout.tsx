@@ -17,7 +17,7 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
                             orientation="vertical"
                             className="mr-2 data-[orientation=vertical]:h-4"
                         />
-                        <DynamicBreadcrumbs />
+                        <DynamicBreadcrumbs homePage="/admin/products" />
                     </div>
                 </header>
                 {children}

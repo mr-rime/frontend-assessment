@@ -11,7 +11,7 @@ const routeApi = getRouteApi('/(store)/_store-layout/')
 
 export function ProductsGrid() {
     const navigate = routeApi.useNavigate();
-    const { page = 1, sortBy, order, category } = routeApi.useSearch();
+    const { page = 1, sortBy, order, category, q } = routeApi.useSearch();
 
     const currentPage = Number(page) || 1;
 
@@ -22,6 +22,7 @@ export function ProductsGrid() {
             sortBy,
             order,
             category,
+            q,
         })
     );
 
@@ -34,6 +35,7 @@ export function ProductsGrid() {
                 sortBy,
                 order,
                 category,
+                q,
             },
         });
     };
@@ -41,7 +43,7 @@ export function ProductsGrid() {
     return (
         <div className="space-y-8">
             <div className="flex items-center justify-between">
-                <p className="text-sm text-muted-foreground"><span>{data?.items.length}</span> <span>products</span></p>
+                <p className="text-sm text-muted-foreground hidden sm:block"><span>{data?.items.length}</span> <span>products</span></p>
                 <ProductsFilter />
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

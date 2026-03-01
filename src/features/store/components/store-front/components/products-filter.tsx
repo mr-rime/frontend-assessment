@@ -13,7 +13,7 @@ const sortOptions = [
 export function ProductsFilter() {
     const navigate = useNavigate({ from: "/" });
     const { sortBy, order } = useSearch({
-        from: "/(store)/_store-layout/",
+        from: "/(store)/_store-layout",
     });
 
     const currentSort = sortOptions.find(opt => opt.sortBy === sortBy && opt.order === order);
@@ -25,6 +25,7 @@ export function ProductsFilter() {
                 sortBy: option.sortBy,
                 order: option.order,
                 page: 1,
+                q: prev.q,
             }),
         });
     };
@@ -32,12 +33,12 @@ export function ProductsFilter() {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="w-[200px] flex items-center justify-between">
+                <Button variant="outline" className="w-full sm:w-50 flex items-center justify-between">
                     <span className="truncate">{currentSort?.label ?? "Name: A to Z"}</span>
                     <ChevronDown className="h-4 w-4 text-muted-foreground ml-2" />
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-[200px] align-end">
+            <DropdownMenuContent className="w-full sm:w-50 align-end">
                 {sortOptions.map((option) => (
                     <DropdownMenuItem
                         key={option.value}

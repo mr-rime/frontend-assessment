@@ -1,7 +1,7 @@
-import type { Order } from "@/features/admin/components/orders/schemas";
+import type { ConvertPropToString, LocalOrder } from "@/shared/types";
 
 
-export const ORDER_DATA: Order[] = [
+export const ORDER_DATA: ConvertPropToString<LocalOrder, "customer">[] = [
     {
         id: "ord_001",
         status: "pending",
@@ -9,6 +9,7 @@ export const ORDER_DATA: Order[] = [
         total: 149.99,
         createdAt: new Date("2026-02-20T10:15:00Z"),
         updatedAt: new Date("2026-02-20T10:15:00Z"),
+        products: [],
     },
     {
         id: "ord_002",
@@ -17,6 +18,7 @@ export const ORDER_DATA: Order[] = [
         total: 89.5,
         createdAt: new Date("2026-02-21T09:30:00Z"),
         updatedAt: new Date("2026-02-21T10:00:00Z"),
+        products: [],
     },
     {
         id: "ord_003",
@@ -25,6 +27,7 @@ export const ORDER_DATA: Order[] = [
         total: 249.0,
         createdAt: new Date("2026-02-18T14:45:00Z"),
         updatedAt: new Date("2026-02-19T08:20:00Z"),
+        products: [],
     },
     {
         id: "ord_004",
@@ -33,6 +36,7 @@ export const ORDER_DATA: Order[] = [
         total: 59.99,
         createdAt: new Date("2026-02-15T12:00:00Z"),
         updatedAt: new Date("2026-02-17T16:10:00Z"),
+        products: [],
     },
     {
         id: "ord_005",
@@ -40,5 +44,6 @@ export const ORDER_DATA: Order[] = [
         customer: "Ethan Brown",
         total: 120.75,
         createdAt: new Date("2026-02-22T11:25:00Z"),
+        products: [],
     },
 ]

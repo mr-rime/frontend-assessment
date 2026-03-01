@@ -8,7 +8,10 @@ export const useRegisterUser = () => {
     return useMutation({
         mutationFn: registerUserService,
         onSuccess: (data) => {
-            login(data);
+            login({
+                ...data,
+                name: `${data.firstName} ${data.lastName}`,
+            });
         },
     });
 };

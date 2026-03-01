@@ -1,16 +1,11 @@
+import type { Customer } from "@/features/admin/components/customers/schemas";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-type User = {
-    firstName: string;
-    lastName: string;
-    email: string;
-};
-
 export type UserAuthState = {
     isAuthenticated: boolean;
-    user: User | null;
-    login: (user: User) => void;
+    user: Customer | null;
+    login: (user: Customer) => void;
     logout: () => void;
 };
 

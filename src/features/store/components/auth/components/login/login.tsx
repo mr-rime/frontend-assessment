@@ -9,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginUserSchema, type LoginUserFormData } from "../../schemas/auth.schemas";
 import { goeyToast } from "goey-toast";
 import { useLoginUser } from "../../hooks/use-login-user";
+import { Loader } from "lucide-react";
 
 export function Login() {
     const navigate = useNavigate();
@@ -21,7 +22,6 @@ export function Login() {
     } = useForm<LoginUserFormData>({
 
         // @ts-expect-error I used this because there are versions mismatch between react-hook-form and zod
-
         resolver: zodResolver(loginUserSchema),
         defaultValues: {
             email: "",
@@ -32,8 +32,7 @@ export function Login() {
     const onSubmit = (data: LoginUserFormData) => {
         loginUser(data, {
             onSuccess: () => {
-                goeyToast.success("Signed in successfully!");
-                navigate({ to: "/", search: { page: 1, order: 'asc', sortBy: 'name', category: [] } });
+                navigate({ to: "/", search: { page: 1, order: 'asc', sortBy: 'name', category: [], q: '' } });
             },
             onError: (error) => {
                 goeyToast.error("Sign in failed", { description: error.message });
@@ -50,27 +49,41 @@ export function Login() {
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                            <div>
+                            <div className="space-y-2">
                                 <Label htmlFor="email">Email</Label>
                                 <Input id="email" placeholder="Email" {...register("email")} />
                                 {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
                             </div>
 
-                            <div>
+                            <div className="space-y-2">
                                 <Label htmlFor="password">Password</Label>
                                 <PasswordInput id="password" {...register("password")} />
                                 {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
                             </div>
 
-                            <Button type="submit" className="w-full" disabled={isPending}>
-                                {isPending ? "Signing In..." : "Sign In"}
-                            </Button>
+                            {
+                                isPending ? (
+                                    <Button className="w-full" disabled>
+                                        <Loader className=" animate-spin" />
+                                    </Button>
+                                ) : (
+                                    <Button type="submit" className="w-full">
+                                        Sign In
+                                    </Button>
+                                )
+                            }
                         </form>
                     </CardContent>
                     <CardFooter>
                         <p className="text-sm text-muted-foreground w-full text-center">
                             Already have an account?{" "}
-                            <Link to="/register" className="text-primary underline">Register</Link>
+                            <Link to="/register" search={{
+                                page: 1,
+                                order: 'asc',
+                                sortBy: 'name',
+                                category: [],
+                                q: ''
+                            }} className="text-primary underline">Register</Link>
                         </p>
                     </CardFooter>
                 </Card>

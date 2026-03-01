@@ -1,12 +1,24 @@
 import { wait } from "@/shared/lib/wait";
 import type { LoginUserFormData, RegisterUserFormData } from "../schemas/auth.schemas";
 
-const MOCK_USERS: Record<string, RegisterUserFormData> = {};
+const MOCK_USERS_KEY = "mock_store_users";
+
+const getStoredUsers = (): Record<string, RegisterUserFormData> => {
+    const stored = typeof window !== 'undefined' ? localStorage.getItem(MOCK_USERS_KEY) : null;
+    return stored ? JSON.parse(stored) : {};
+};
+
+const saveUsers = (users: Record<string, RegisterUserFormData>) => {
+    if (typeof window !== 'undefined') {
+        localStorage.setItem(MOCK_USERS_KEY, JSON.stringify(users));
+    }
+};
 
 export const loginUserService = async (data: LoginUserFormData) => {
     await wait(1000);
 
-    const user = MOCK_USERS[data.email];
+    const users = getStoredUsers();
+    const user = users[data.email];
 
     if (!user || user.password !== data.password) {
         throw new Error("Invalid email or password");
@@ -22,11 +34,14 @@ export const loginUserService = async (data: LoginUserFormData) => {
 export const registerUserService = async (data: RegisterUserFormData) => {
     await wait(1000);
 
-    if (MOCK_USERS[data.email]) {
+    const users = getStoredUsers();
+
+    if (users[data.email]) {
         throw new Error("User with this email already exists");
     }
 
-    MOCK_USERS[data.email] = data;
+    users[data.email] = data;
+    saveUsers(users);
 
     return {
         email: data.email,

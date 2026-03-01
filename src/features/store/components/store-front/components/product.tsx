@@ -9,6 +9,13 @@ export function Product({ id, name, price, image }: Product) {
             key={id}
             to="/product/$productId"
             params={{ productId: id || "" }}
+            search={{
+                page: 1,
+                order: 'asc',
+                sortBy: 'name',
+                category: [],
+                q: ''
+            }}
             className="group block bg-card rounded-lg overflow-hidden border border-border hover:shadow-lg transition-shadow"
         >
             <div className="aspect-square bg-muted">

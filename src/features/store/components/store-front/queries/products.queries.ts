@@ -3,13 +3,13 @@ import { queryOptions, type UseQueryOptions } from "@tanstack/react-query";
 import { getProducts } from "../api/get-products";
 import type { Paginated } from "@/shared/types";
 
-type ProductsQueryKey = ["products", { currentPage: number; pageSize: number; sortBy?: string; order?: 'asc' | 'desc'; category?: string[] }];
+type ProductsQueryKey = ["products", { currentPage: number; pageSize: number; sortBy?: string; order?: 'asc' | 'desc'; category?: string[]; q?: string }];
 
 export function getProductsQueryOptions<
     T = Paginated<Product[]>,
     TError = Error
 >(
-    params: { currentPage: number; pageSize: number; sortBy?: string; order?: 'asc' | 'desc'; category?: string[] },
+    params: { currentPage: number; pageSize: number; sortBy?: string; order?: 'asc' | 'desc'; category?: string[]; q?: string },
     options?: Omit<
         UseQueryOptions<Paginated<Product[]>, TError, T, ProductsQueryKey>,
         "queryKey" | "queryFn"
@@ -19,8 +19,8 @@ export function getProductsQueryOptions<
         ...options,
         queryKey: ["products", params],
         queryFn: ({ queryKey }) => {
-            const [, { currentPage, pageSize, sortBy, order, category }] = queryKey;
-            return getProducts({ currentPage, pageSize, sortBy, order, category });
+            const [, { currentPage, pageSize, sortBy, order, category, q }] = queryKey;
+            return getProducts({ currentPage, pageSize, sortBy, order, category, q });
         },
     });
 }

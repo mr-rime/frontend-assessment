@@ -16,6 +16,8 @@ export function NewProductDialog() {
     const [openDialog, setOpenDialog] = React.useState(false);
 
     const form = useForm<Product>({
+
+        // @ts-expect-error I used this because there are versions mismatch between react-hook-form and zod
         resolver: zodResolver(ProductSchema),
         defaultValues: {
             name: "",
@@ -53,7 +55,7 @@ export function NewProductDialog() {
                             <h3 className="text-center">New Product</h3>
                         </DialogTitle>
                     </DialogHeader>
-                    <form id="product-form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+                    <form id="product-form" onSubmit={form.handleSubmit(onSubmit as never)} className="space-y-5">
                         <Controller
                             name="name"
                             control={form.control}

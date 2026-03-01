@@ -11,6 +11,7 @@ export const Route = createFileRoute('/(store)/_store-layout/register/')({
           order: 'asc',
           sortBy: 'name',
           category: [],
+          q: '',
         },
       })
     }

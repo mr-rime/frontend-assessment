@@ -3,12 +3,9 @@ import type { ConvertPropToString, LocalOrder } from "@/shared/types";
 import { getOrders } from "../api/get-orders";
 
 
-export function getOrdersQueryOptions<
-    T = ConvertPropToString<LocalOrder, "customer">[],
-    TError = Error
->(
+export function getOrdersQueryOptions(
     options?: Omit<
-        UseQueryOptions<T, TError, T, ["orders"]>,
+        UseQueryOptions<ConvertPropToString<LocalOrder, "customer">[], Error, ConvertPropToString<LocalOrder, "customer">[], ["orders"]>,
         "queryKey" | "queryFn"
     >
 ) {

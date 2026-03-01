@@ -40,12 +40,12 @@ export function ProductPage() {
     };
 
     return (
-        <div className="container mx-auto px-4 py-8 mt-16 space-y-8">
+        <div className="container mx-auto px-4 py-8 mt-25 space-y-8 md:mt-16">
             <Breadcrumb>
                 <BreadcrumbList>
                     <BreadcrumbItem>
                         <BreadcrumbLink asChild>
-                            <Link to="/" search={{ page: 1, sortBy: 'name', order: 'asc', category: [] }}>Products</Link>
+                            <Link to="/" search={{ page: 1, sortBy: 'name', order: 'asc', category: [], q: '' }}>Products</Link>
                         </BreadcrumbLink>
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />

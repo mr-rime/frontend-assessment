@@ -8,15 +8,25 @@ export const getProducts = async ({
     pageSize,
     sortBy,
     order,
-    category
+    category,
+    q
 }: {
     currentPage: number,
     pageSize: number,
     sortBy?: string,
     order?: 'asc' | 'desc',
-    category?: string[]
+    category?: string[],
+    q?: string
 }): Promise<Paginated<Product[]>> => {
     let products = [...(db.products || [])];
+
+    if (q) {
+        const lowerQ = q.toLowerCase();
+        products = products.filter(p =>
+            p.name.toLowerCase().includes(lowerQ) ||
+            p.description?.toLowerCase().includes(lowerQ)
+        );
+    }
 
     if (category && category.length > 0) {
         products = products.filter(p => category.includes(p.category));

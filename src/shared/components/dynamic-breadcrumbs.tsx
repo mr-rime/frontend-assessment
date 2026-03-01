@@ -1,4 +1,4 @@
-import { useMatches, Link } from "@tanstack/react-router"
+import { useMatches, Link, } from "@tanstack/react-router"
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -8,8 +8,11 @@ import {
     BreadcrumbSeparator,
 } from "@/shared/components/ui/breadcrumb"
 import React from "react"
+import type { FileRouteTypes } from "@/routeTree.gen"
 
-export function DynamicBreadcrumbs() {
+
+
+export function DynamicBreadcrumbs({ homePage }: { homePage?: FileRouteTypes["to"] }) {
     const matches = useMatches()
 
     const breadcrumbMatches = matches.filter((match) => {
@@ -24,7 +27,7 @@ export function DynamicBreadcrumbs() {
             <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
                     <BreadcrumbLink asChild>
-                        <Link to="/">Home</Link>
+                        <Link to={homePage || "/"} search={{ page: 1, order: "asc", sortBy: "name", category: [], q: "" }}>Home</Link>
                     </BreadcrumbLink>
                 </BreadcrumbItem>
 
