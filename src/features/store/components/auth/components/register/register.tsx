@@ -98,7 +98,7 @@ export function Register() {
                     <CardFooter>
                         <p className="text-sm text-muted-foreground w-full text-center">
                             Already have an account?{" "}
-                            <Link to="/login" className="text-primary underline">Sign in</Link>
+                            <Link to="/login" preload="intent" className="text-primary underline">Sign in</Link>
                         </p>
                     </CardFooter>
                 </Card>
