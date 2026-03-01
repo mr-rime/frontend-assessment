@@ -11,7 +11,7 @@ import * as React from "react";
 import { useDebounce } from "@/shared/hooks/use-debounce";
 
 export function StoreHeader() {
-    const cart = useCartStore(state => state.cart);
+    const { cart, syncCartWithCustomer } = useCartStore();
     const { isAuthenticated, user, logout } = useUserAuthStore();
     const navigate = useNavigate();
     const search = useSearch({ from: '/(store)/_store-layout' });
@@ -19,6 +19,7 @@ export function StoreHeader() {
 
     const handleLogout = () => {
         logout();
+        syncCartWithCustomer(undefined);
         goeyToast.success("Logged out successfully!");
     }
 

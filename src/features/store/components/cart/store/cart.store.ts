@@ -50,4 +50,4 @@ export const useCartStore = create<CartState>()((set) => ({
     syncCartWithCustomer: (customer) => set((state) => ({
         cart: state.cart.map(item => ({ ...item, customer }))
     })),
-})),
+}));
