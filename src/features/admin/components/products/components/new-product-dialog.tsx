@@ -12,16 +12,9 @@ import * as React from "react";
 import { goeyToast } from "goey-toast";
 import { Textarea } from "@/shared/components/ui/textarea";
 
-const CATEGORIES = [
-    "Electronics",
-    "Clothing",
-    "Home & Garden",
-    "Sports & Outdoors",
-    "Beauty & Personal Care",
-    "Toys & Games",
-    "Books",
-    "Automotive"
-];
+import { PRODCUT_DATA } from "@/db/products";
+
+const CATEGORIES = Array.from(new Set(PRODCUT_DATA.map(p => p.category)));
 
 export function NewProductDialog() {
     const [openDialog, setOpenDialog] = React.useState(false);
