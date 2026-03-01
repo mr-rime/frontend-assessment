@@ -6,6 +6,7 @@ import { Input } from "../ui/input";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import React, { useState } from "react";
 import { useDebounce } from "@/shared/hooks/use-debounce";
+import { useNavigate, useSearch } from "@tanstack/react-router";
 
 export function DataTableFilter<TData>({ table }: { table: Table<TData> }) {
     const filterableColumns = React.useMemo(() => {
@@ -18,20 +19,30 @@ export function DataTableFilter<TData>({ table }: { table: Table<TData> }) {
             );
     }, [table]);
 
+    const navigate = useNavigate();
+    const search = useSearch({ strict: false });
+
     const firstColumnId = filterableColumns[0]?.id ?? "";
+    const [currentFilter, setCurrentFilter] = useState(search.filterBy ?? firstColumnId);
+    const [inputValue, setInputValue] = useState(search.q ?? "");
 
-    const [currentFilter, setCurrentFilter] = useState(firstColumnId);
-    const [inputValue, setInputValue] = useState("");
 
-    const debouncedSetFilter = useDebounce((value) => {
-        table.getColumn(currentFilter)?.setFilterValue(value);
+    const debouncedSearch = useDebounce((value: string, filterBy: string) => {
+        const targetCol = table.getColumn(filterBy);
+        targetCol?.setFilterValue(value);
+
+        navigate({
+            to: ".",
+            search: {
+                order: search.order,
+                sortBy: search.sortBy,
+                page: search.page,
+                q: value,
+                pageSize: table.getState().pagination.pageSize,
+                filterBy,
+            }
+        });
     }, 300);
-
-    React.useEffect(() => {
-        setInputValue(
-            (table.getColumn(currentFilter)?.getFilterValue() as string) ?? ""
-        );
-    }, [currentFilter, table]);
 
     return (
         <div className="flex items-center gap-2">
@@ -41,7 +52,7 @@ export function DataTableFilter<TData>({ table }: { table: Table<TData> }) {
                 onChange={(event) => {
                     const value = event.target.value;
                     setInputValue(value);
-                    debouncedSetFilter(value);
+                    debouncedSearch(value, currentFilter);
                 }}
                 className="max-w-sm"
             />
@@ -59,9 +70,8 @@ export function DataTableFilter<TData>({ table }: { table: Table<TData> }) {
                             </Button>
                         </TooltipTrigger>
                     </DropdownMenuTrigger>
-
                     <TooltipContent>
-                        <p>Add filter</p>
+                        <p>Filter by field</p>
                     </TooltipContent>
                 </Tooltip>
 
@@ -69,7 +79,23 @@ export function DataTableFilter<TData>({ table }: { table: Table<TData> }) {
                     {filterableColumns.map((column) => (
                         <DropdownMenuItem
                             key={column.id}
-                            onClick={() => setCurrentFilter(column.id)}
+                            onClick={() => {
+                                filterableColumns.forEach((col) => {
+                                    col.setFilterValue("");
+                                });
+                                setCurrentFilter(column.id);
+                                setInputValue("");
+
+                                const nextSearch = {
+                                    order: search.order,
+                                    sortBy: search.sortBy,
+                                    page: search.page,
+                                    q: "",
+                                    pageSize: table.getState().pagination.pageSize,
+                                    filterBy: column.id,
+                                };
+                                navigate({ to: ".", search: nextSearch });
+                            }}
                             className="capitalize"
                         >
                             {column.id}

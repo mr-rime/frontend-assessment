@@ -1,5 +1,5 @@
 import { queryOptions, type UseQueryOptions } from "@tanstack/react-query";
-import type { LocalOrder } from "@/shared/types";
+import type { ConvertPropToString, LocalOrder } from "@/shared/types";
 import { getOrders } from "../api/get-orders";
 
 
@@ -8,16 +8,14 @@ export function getOrdersQueryOptions<
     TError = Error
 >(
     options?: Omit<
-        UseQueryOptions<LocalOrder[], TError, T, ["orders"]>,
+        UseQueryOptions<ConvertPropToString<LocalOrder, "customer">[], TError, T, ["orders"]>,
         "queryKey" | "queryFn"
     >
 ) {
     return queryOptions({
         ...options,
         queryKey: ["orders"],
-        queryFn: () => {
-            return getOrders();
-        },
+        queryFn: getOrders,
     });
 }
 

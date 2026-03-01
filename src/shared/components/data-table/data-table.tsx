@@ -19,6 +19,7 @@ import { DataTableViewOptions } from "./data-table-view-options"
 import { DataTableFilter } from "./data-table-filter"
 import { DataTableFacetedFilter } from "./data-table-faceted-filter"
 import { Skeleton } from "../ui/skeleton"
+import { useSearch } from "@tanstack/react-router"
 
 
 type FacetedFilter = {
@@ -29,10 +30,11 @@ type FacetedFilter = {
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
-    data: TData[] ,
+    data: TData[],
     isLoading?: boolean
     facetedFilters?: FacetedFilter[]
-} 
+}
+
 
 export function DataTable<TData, TValue>({
     columns,
@@ -40,8 +42,21 @@ export function DataTable<TData, TValue>({
     isLoading,
     facetedFilters,
 }: DataTableProps<TData, TValue>) {
-    const [sorting, setSorting] = React.useState<SortingState>([])
-    const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
+    const search = useSearch({ strict: false });
+
+    const pageSize = (search.pageSize as number | undefined) ?? 10
+    const pageIndex = ((search.page as number | undefined) ?? 1) - 1
+    const sortBy = (search.sortBy as string | undefined) ?? ""
+    const order = (search.order as "asc" | "desc" | undefined) ?? "asc"
+    const filterBy = (search.filterBy as string | undefined) ?? ""
+    const q = (search.q as string | undefined) ?? ""
+
+    const [sorting, setSorting] = React.useState<SortingState>(
+        sortBy ? [{ id: sortBy, desc: order === "desc" }] : []
+    )
+    const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+        q ? [{ id: filterBy, value: q }] : []
+    )
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = React.useState({})
 
@@ -56,11 +71,14 @@ export function DataTable<TData, TValue>({
         getFilteredRowModel: getFilteredRowModel(),
         onColumnVisibilityChange: setColumnVisibility,
         onRowSelectionChange: setRowSelection,
+        initialState: {
+            pagination: { pageIndex, pageSize },
+        },
         state: {
             sorting,
             columnFilters,
             columnVisibility,
-            rowSelection
+            rowSelection,
         }
     })
 

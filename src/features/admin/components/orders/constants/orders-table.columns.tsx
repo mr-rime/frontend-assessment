@@ -5,10 +5,11 @@ import { formatNumberToUSD } from "@/shared/lib/format-number-to-usd";
 import { DataTableColumnHeader } from "@/shared/components/data-table";
 import { Checkbox } from "@/shared/components/ui/checkbox";
 import { formatDate } from "@/shared/lib/format-date";
+import type { ConvertPropToString } from "@/shared/types";
 
 
 
-export const ordersTableColumns: ColumnDef<Order>[] = [
+export const ordersTableColumns: ColumnDef<ConvertPropToString<Order, "customer">>[] = [
     {
         id: "select",
         header: ({ table }) => (

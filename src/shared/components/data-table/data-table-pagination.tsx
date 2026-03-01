@@ -7,16 +7,34 @@ import {
 } from "lucide-react"
 import { Button } from "../ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
-
+import { useNavigate, useSearch, } from "@tanstack/react-router"
+import { useDebounce } from "@/shared/hooks/use-debounce"
 
 
 interface DataTablePaginationProps<TData> {
     table: Table<TData>
 }
 
+
 export function DataTablePagination<TData>({
     table,
 }: DataTablePaginationProps<TData>) {
+    const navigate = useNavigate();
+    const search = useSearch({ strict: false });
+    const debouncedPagination = useDebounce(() => {
+        navigate({
+            to: ".",
+            search: {
+                order: search.order,
+                sortBy: search.sortBy,
+                page: search.page,
+                q: search.q ?? "",
+                pageSize: table.getState().pagination.pageSize,
+                filterBy: search.filterBy
+            },
+        })
+    })
+
     return (
         <div className="flex items-center justify-between px-2 mt-5">
             <div className="text-muted-foreground flex-1 text-sm">
@@ -30,6 +48,7 @@ export function DataTablePagination<TData>({
                         value={`${table.getState().pagination.pageSize}`}
                         onValueChange={(value) => {
                             table.setPageSize(Number(value))
+                            debouncedPagination()
                         }}
                     >
                         <SelectTrigger className="h-8 w-17.5">
@@ -53,7 +72,10 @@ export function DataTablePagination<TData>({
                         variant="outline"
                         size="icon"
                         className="hidden size-8 lg:flex"
-                        onClick={() => table.setPageIndex(0)}
+                        onClick={() => {
+                            table.setPageIndex(0)
+                            debouncedPagination()
+                        }}
                         disabled={!table.getCanPreviousPage()}
                     >
                         <span className="sr-only">Go to first page</span>
@@ -63,7 +85,10 @@ export function DataTablePagination<TData>({
                         variant="outline"
                         size="icon"
                         className="size-8"
-                        onClick={() => table.previousPage()}
+                        onClick={() => {
+                            table.previousPage()
+                            debouncedPagination()
+                        }}
                         disabled={!table.getCanPreviousPage()}
                     >
                         <span className="sr-only">Go to previous page</span>
@@ -73,7 +98,10 @@ export function DataTablePagination<TData>({
                         variant="outline"
                         size="icon"
                         className="size-8"
-                        onClick={() => table.nextPage()}
+                        onClick={() => {
+                            table.nextPage()
+                            debouncedPagination()
+                        }}
                         disabled={!table.getCanNextPage()}
                     >
                         <span className="sr-only">Go to next page</span>
@@ -83,7 +111,10 @@ export function DataTablePagination<TData>({
                         variant="outline"
                         size="icon"
                         className="hidden size-8 lg:flex"
-                        onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+                        onClick={() => {
+                            table.setPageIndex(table.getPageCount() - 1)
+                            debouncedPagination()
+                        }}
                         disabled={!table.getCanNextPage()}
                     >
                         <span className="sr-only">Go to last page</span>
