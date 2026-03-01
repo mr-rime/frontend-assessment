@@ -44,5 +44,9 @@ pnpm dev
 
 ## How to access Store
 
+Actaully you can access the store without logging in
+
+## How to register
+
 - Navigate to <http://localhost:5174/register>
 - Create an account
