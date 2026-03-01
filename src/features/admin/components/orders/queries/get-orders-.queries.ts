@@ -4,11 +4,11 @@ import { getOrders } from "../api/get-orders";
 
 
 export function getOrdersQueryOptions<
-    T = LocalOrder[],
+    T = ConvertPropToString<LocalOrder, "customer">[],
     TError = Error
 >(
     options?: Omit<
-        UseQueryOptions<ConvertPropToString<LocalOrder, "customer">[], TError, T, ["orders"]>,
+        UseQueryOptions<T, TError, T, ["orders"]>,
         "queryKey" | "queryFn"
     >
 ) {

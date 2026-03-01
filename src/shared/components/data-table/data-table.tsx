@@ -50,12 +50,23 @@ export function DataTable<TData, TValue>({
     const order = (search.order as "asc" | "desc" | undefined) ?? "asc"
     const filterBy = (search.filterBy as string | undefined) ?? ""
     const q = (search.q as string | undefined) ?? ""
+    const filters = (search.filters as Record<string, string[]> | undefined) ?? {}
+
+    const initialColumnFilters: ColumnFiltersState = []
+    if (q && filterBy) {
+        initialColumnFilters.push({ id: filterBy, value: q })
+    }
+    Object.entries(filters).forEach(([id, value]) => {
+        if (value && value.length > 0) {
+            initialColumnFilters.push({ id, value })
+        }
+    })
 
     const [sorting, setSorting] = React.useState<SortingState>(
         sortBy ? [{ id: sortBy, desc: order === "desc" }] : []
     )
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-        q ? [{ id: filterBy, value: q }] : []
+        initialColumnFilters
     )
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = React.useState({})

@@ -24,14 +24,11 @@ export function DataTablePagination<TData>({
     const debouncedPagination = useDebounce(() => {
         navigate({
             to: ".",
-            search: {
-                order: search.order,
-                sortBy: search.sortBy,
+            search: (prev: Record<string, unknown>) => ({
+                ...prev,
                 page: search.page,
-                q: search.q ?? "",
                 pageSize: table.getState().pagination.pageSize,
-                filterBy: search.filterBy
-            },
+            }),
         })
     })
 

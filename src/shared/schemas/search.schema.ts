@@ -9,3 +9,6 @@ export const baseSearchSchema = z.object({
     order: fallback(z.enum(['asc', 'desc']).optional(), 'asc'),
     q: fallback(z.string().optional(), ''),
 })
+
+export const filtersRecordSchema = z.record(z.string(), z.array(z.string()))
+export const filtersSchema = fallback(filtersRecordSchema.optional(), {} as Record<string, string[]>)

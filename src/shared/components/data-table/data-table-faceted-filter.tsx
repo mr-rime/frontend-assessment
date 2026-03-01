@@ -2,6 +2,7 @@ import type { Column } from "@tanstack/react-table";
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
 import { Funnel } from "lucide-react";
+import { useNavigate, useSearch } from "@tanstack/react-router";
 
 interface DataTableFacetedFilterProps<TData, TValue> {
     column?: Column<TData, TValue>
@@ -17,6 +18,8 @@ export function DataTableFacetedFilter<TData, TValue>({
     title,
     options,
 }: DataTableFacetedFilterProps<TData, TValue>) {
+    const navigate = useNavigate();
+    const search = useSearch({ strict: false });
     const selectedValues = new Set(column?.getFilterValue() as string[])
 
     return (
@@ -52,6 +55,24 @@ export function DataTableFacetedFilter<TData, TValue>({
                                 column?.setFilterValue(
                                     filterValues.length ? filterValues : undefined
                                 )
+
+                                if (column?.id) {
+                                    navigate({
+                                        to: ".",
+                                        search: {
+                                            order: search.order,
+                                            sortBy: search.sortBy,
+                                            page: 1,
+                                            q: search.q,
+                                            pageSize: search.pageSize,
+                                            filterBy: search.filterBy,
+                                            filters: {
+                                                ...(search.filters || {}),
+                                                [column.id]: filterValues.length > 0 ? filterValues : undefined
+                                            }
+                                        }
+                                    })
+                                }
                             }}
                         >
                             <span className="capitalize">{option.label}</span>
@@ -63,7 +84,26 @@ export function DataTableFacetedFilter<TData, TValue>({
                         <DropdownMenuSeparator />
                         <div
                             className="relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground justify-center font-medium"
-                            onClick={() => column?.setFilterValue(undefined)}
+                            onClick={() => {
+                                column?.setFilterValue(undefined)
+                                if (column?.id) {
+                                    navigate({
+                                        to: ".",
+                                        search: {
+                                            order: search.order,
+                                            sortBy: search.sortBy,
+                                            page: 1,
+                                            q: search.q,
+                                            pageSize: search.pageSize,
+                                            filterBy: search.filterBy,
+                                            filters: {
+                                                ...(search.filters || {}),
+                                                [column.id]: undefined
+                                            }
+                                        }
+                                    })
+                                }
+                            }}
                         >
                             Clear filters
                         </div>

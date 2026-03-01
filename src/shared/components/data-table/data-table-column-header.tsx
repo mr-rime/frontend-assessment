@@ -4,7 +4,7 @@ import { ArrowDown, ArrowUp, ChevronsUpDown } from "lucide-react"
 import { cn } from "@/shared/lib/utils"
 import { Button } from "../ui/button"
 import * as React from "react"
-import { useNavigate, useSearch } from "@tanstack/react-router"
+import { useNavigate } from "@tanstack/react-router"
 import { useDebounce } from "@/shared/hooks/use-debounce"
 
 
@@ -19,20 +19,16 @@ export function DataTableColumnHeader<TData, TValue>({
     title,
     className,
 }: DataTableColumnHeaderProps<TData, TValue>) {
-    const search = useSearch({ strict: false });
     const navigate = useNavigate();
 
     const debouncedSort = useDebounce((value) => {
         navigate({
             to: ".",
-            search: {
+            search: (prev: Record<string, unknown>) => ({
+                ...prev,
                 order: value,
                 sortBy: column.id,
-                page: search.page,
-                q: search.q,
-                pageSize: search.pageSize,
-                filterBy: search.filterBy
-            },
+            }),
         })
     })
 
