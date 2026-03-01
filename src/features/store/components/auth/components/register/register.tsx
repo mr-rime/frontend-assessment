@@ -19,8 +19,7 @@ export function Register() {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<RegisterUserFormData>({
-        // @ts-expect-error I used this because there are versions mismatch between react-hook-form and zod
+    } = useForm({
         resolver: zodResolver(registerUserSchema),
         defaultValues: {
             firstName: "",

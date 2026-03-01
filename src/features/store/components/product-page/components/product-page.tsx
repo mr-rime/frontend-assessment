@@ -45,7 +45,7 @@ export function ProductPage() {
                 <BreadcrumbList>
                     <BreadcrumbItem>
                         <BreadcrumbLink asChild>
-                            <Link to="/" search={{ page: 1, sortBy: 'name', order: 'asc', category: [], q: '' }}>Products</Link>
+                            <Link to="/">Products</Link>
                         </BreadcrumbLink>
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />

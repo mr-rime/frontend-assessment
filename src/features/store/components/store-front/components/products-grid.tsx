@@ -11,7 +11,7 @@ const routeApi = getRouteApi('/(store)/_store-layout/')
 
 export function ProductsGrid() {
     const navigate = routeApi.useNavigate();
-    const { page = 1, sortBy, order, category, q } = routeApi.useSearch();
+    const { page = 1, sortBy = 'name', order = 'asc', category = [], q = '' } = routeApi.useSearch();
 
     const currentPage = Number(page) || 1;
 

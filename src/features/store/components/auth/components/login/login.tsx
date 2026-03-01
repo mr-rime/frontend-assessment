@@ -21,7 +21,6 @@ export function Login() {
         formState: { errors },
     } = useForm<LoginUserFormData>({
 
-        // @ts-expect-error I used this because there are versions mismatch between react-hook-form and zod
         resolver: zodResolver(loginUserSchema),
         defaultValues: {
             email: "",

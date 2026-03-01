@@ -19,7 +19,6 @@ export function LoginAdmin() {
         handleSubmit,
         formState: { errors },
     } = useForm<LoginFormData>({
-        // @ts-expect-error I used this because there are versions mismatch between react-hook-form and zod
         resolver: zodResolver(loginSchema),
         defaultValues: { email: "admin@admin.com", password: "password123" }
     })

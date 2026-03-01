@@ -1,4 +1,4 @@
-import * as z from "zod";
+import * as z from "zod"
 
 export const loginUserSchema = z.object({
     email: z.email("Invalid email address"),
