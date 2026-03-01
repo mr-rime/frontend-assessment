@@ -27,7 +27,7 @@ export function DynamicBreadcrumbs({ homePage }: { homePage?: FileRouteTypes["to
             <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
                     <BreadcrumbLink asChild>
-                        <Link to={homePage || "/"} search={{ page: 1, order: "asc", sortBy: "name", category: [], q: "" }}>Home</Link>
+                        <Link to={homePage || "/"}>Home</Link>
                     </BreadcrumbLink>
                 </BreadcrumbItem>
 

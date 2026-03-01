@@ -77,13 +77,7 @@ export function Login() {
                     <CardFooter>
                         <p className="text-sm text-muted-foreground w-full text-center">
                             Already have an account?{" "}
-                            <Link to="/register" search={{
-                                page: 1,
-                                order: 'asc',
-                                sortBy: 'name',
-                                category: [],
-                                q: ''
-                            }} className="text-primary underline">Register</Link>
+                            <Link to="/register" className="text-primary underline">Register</Link>
                         </p>
                     </CardFooter>
                 </Card>

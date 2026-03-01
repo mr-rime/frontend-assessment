@@ -99,13 +99,7 @@ export function Register() {
                     <CardFooter>
                         <p className="text-sm text-muted-foreground w-full text-center">
                             Already have an account?{" "}
-                            <Link to="/login" search={{
-                                page: 1,
-                                order: 'asc',
-                                sortBy: 'name',
-                                category: [],
-                                q: ''
-                            }} className="text-primary underline">Sign in</Link>
+                            <Link to="/login" className="text-primary underline">Sign in</Link>
                         </p>
                     </CardFooter>
                 </Card>

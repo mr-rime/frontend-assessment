@@ -64,7 +64,7 @@ export function StoreHeader() {
                                     <SheetTitle>Menu</SheetTitle>
                                 </SheetHeader>
                                 <div className="mt-8 flex flex-col gap-6">
-                                    <Link to="/" search={{ page: 1, order: "asc", sortBy: "name", category: [], q: "" }} className="text-lg font-semibold border-b pb-2">
+                                    <Link to="/" search={{ page: 1, sortBy: 'name', order: 'asc', category: [], q: '' }} className="text-lg font-semibold border-b pb-2">
                                         Home
                                     </Link>
                                     <div className="space-y-4">
@@ -74,7 +74,7 @@ export function StoreHeader() {
                                 </div>
                             </SheetContent>
                         </Sheet>
-                        <Link to="/" search={{ page: 1, order: "asc", sortBy: "name", category: [], q: "" }} className="font-bold text-xl whitespace-nowrap">
+                        <Link to="/" search={{ page: 1, sortBy: 'name', order: 'asc', category: [], q: '' }} className="font-bold text-xl whitespace-nowrap">
                             Frontend Store
                         </Link>
                     </div>
@@ -91,7 +91,7 @@ export function StoreHeader() {
                                 </div>
                             )}
                             <Button variant={"ghost"} size="icon" asChild>
-                                <Link to="/cart" search={{ page: 1, order: "asc", sortBy: "name", category: [], q: "" }}>
+                                <Link to="/cart">
                                     <ShoppingCart size={21} />
                                 </Link>
                             </Button>
@@ -123,7 +123,7 @@ const UserMenu = ({ isMobile = false, isAuthenticated, user, handleLogout }: { i
             </div>
         ) : (
             <Button variant={"ghost"} asChild className={isMobile ? "w-full justify-start" : ""}>
-                <Link to="/login" search={{ page: 1, order: "asc", sortBy: "name", category: [], q: "" }}>Sign In</Link>
+                <Link to="/login">Sign In</Link>
             </Button>
         )}
     </>
