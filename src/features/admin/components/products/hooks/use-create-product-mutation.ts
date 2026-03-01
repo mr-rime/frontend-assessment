@@ -15,7 +15,7 @@ export const useCreateProductMutation = () => {
             const previousProducts = queryClient.getQueryData<Product[]>(queryKey);
 
             queryClient.setQueryData<Product[]>(queryKey, (old) => {
-                const optimisticProduct = { ...newProduct, id: "temp-" + Date.now() };
+                const optimisticProduct = { ...newProduct, id: String("temp-" + Date.now()).slice(0, 7) };
                 return old ? [...old, optimisticProduct] : [optimisticProduct];
             });
 
